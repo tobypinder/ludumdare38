@@ -11,6 +11,7 @@ var GameControllerMouse = {
   unhandledMouseDown: false,
   unhandledWheelDown: false,
   unhandledWheelUp: false,
+  selectedEntity: null,
 
   init:function()
   {
@@ -62,7 +63,10 @@ var GameControllerMouse = {
     }
     event.preventDefault();
   },
-
+  selectEntity: function(entity)
+  {
+    this.selectedEntity = entity;
+  },
   updateMousePosition: function(event)
   {
     var rect    = CanvasElement.getBoundingClientRect();

@@ -24,38 +24,38 @@ var GameViewPlanetSegment = {
     } else if(segment.mouseHover) {
       Canvas.strokeStyle = '#ffff66'
       Canvas.fillStyle   = '#ffff66'
+    } else if(segment === GameControllerMouse.selectedEntity) {
+      Canvas.strokeStyle = '#7777ff'
+      Canvas.fillStyle   = '#7777ff'
     } else {
       Canvas.strokeStyle = '#66ff66'
       Canvas.fillStyle   = '#66ff66'
     }
-
-
     Canvas.fill();
   },
   checkHover: function(segment)
   {
-    var hoveringOverSegment = Canvas.isPointInPath(
+    var hovering = Canvas.isPointInPath(
       GameControllerMouse.mouseX,
       GameControllerMouse.mouseY
     )
 
-    if(hoveringOverSegment) {
-      segment.mouseHover = true;
+    if(hovering) {
+      segment.isFocused();
     } else {
-      segment.mouseHover = false;
+      segment.isUnfocused();
     }
   },
   checkMouseDown:function(segment)
   {
-    var clickingSegment = Canvas.isPointInPath(
+    var mouseDown = Canvas.isPointInPath(
       GameControllerMouse.clickX,
       GameControllerMouse.clickY
     )
 
-    if(clickingSegment && GameControllerMouse.unhandledMouseDown) {
+    if(mouseDown && GameControllerMouse.unhandledMouseDown) {
       // Handle the mouse down by selecting this segment
-      GameControllerMouse.unhandledMouseDown = false
-      segment.mouseDown = true;
+      segment.isSelected();
     } else if(!GameControllerMouse.mouseDown){
       // If the mouse isn't physically down we can deselect the element.
       segment.mouseDown = false;
