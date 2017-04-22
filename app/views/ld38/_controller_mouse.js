@@ -15,10 +15,12 @@ var GameControllerMouse = {
 
   init:function()
   {
-    CanvasElement.addEventListener('mousemove', this.onMouseMove.bind(this))
-    CanvasElement.addEventListener('mousedown', this.onMouseDown.bind(this))
-    CanvasElement.addEventListener('mouseup',   this.onMouseUp.bind(this))
-    CanvasElement.addEventListener('wheel',     this.onWheel.bind(this));
+    CanvasElement.addEventListener('mousemove',   this.onMouseMove.bind(this))
+    CanvasElement.addEventListener('mousedown',   this.onMouseDown.bind(this))
+    CanvasElement.addEventListener('mouseup',     this.onMouseUp.bind(this))
+    CanvasElement.addEventListener('wheel',       this.onWheel.bind(this));
+    CanvasElement.addEventListener('click',       this.onClick.bind(this));
+    CanvasElement.addEventListener('contextmenu', this.onContextMenu.bind(this));
   },
   onMouseMove: function(event)
   {
@@ -61,6 +63,14 @@ var GameControllerMouse = {
     {
       this.unhandledWheelDown = true;
     }
+    event.preventDefault();
+  },
+  onClick: function(event)
+  {
+    event.preventDefault();
+  },
+  onContextMenu: function(event)
+  {
     event.preventDefault();
   },
   selectEntity: function(entity)

@@ -1,36 +1,68 @@
 var GameViewPlanetSegment = {
+  colors: {
+    DAMAGED:     '#ff6666',
+    MOUSE_DOWN:  '#ff33ff',
+    MOUSE_HOVER: '#ffff66',
+    SELECTED:    '#7777ff',
+    STANDARD:    '#66ff66'
+  },
+
   frame: function() {
   },
   render: function(segment) {
+
+    this.renderDamageSegment(segment);
+    this.checkHover(segment);
+    this.checkMouseDown(segment);
+    this.renderMainSegment(segment);
+
+
+    if(segment.mouseDown) {
+      Canvas.strokeStyle = this.colors.MOUSE_DOWN
+      Canvas.fillStyle   = this.colors.MOUSE_DOWN
+    } else if(segment.mouseHover) {
+      Canvas.strokeStyle = this.colors.MOUSE_HOVER
+      Canvas.fillStyle   = this.colors.MOUSE_HOVER
+    } else if(segment === GameControllerMouse.selectedEntity) {
+      Canvas.strokeStyle = this.colors.SELECTED
+      Canvas.fillStyle   = this.colors.SELECTED
+    } else {
+      Canvas.strokeStyle = this.colors.STANDARD
+      Canvas.fillStyle   = this.colors.STANDARD
+    }
+    Canvas.fill();
+  },
+
+  renderMainSegment(segment) {
     GameView.renderModeWorld();
-    // Take the line out unless mouseovered
     Canvas.beginPath();
     Canvas.moveTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.arc(
       segment.planet.positionX,
       segment.planet.positionY,
-      segment.planet.radius   + segment.sizeOffset(),
+      segment.sizeOffset(),
       segment.planet.rotation + segment.radialOffset(),
       segment.planet.rotation + segment.radialOffset() + segment.radialSize());
     Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.closePath();
 
-    this.checkHover(segment);
-    this.checkMouseDown(segment);
 
-    if(segment.mouseDown) {
-      Canvas.strokeStyle = '#ff7777'
-      Canvas.fillStyle   = '#ff7777'
-    } else if(segment.mouseHover) {
-      Canvas.strokeStyle = '#ffff66'
-      Canvas.fillStyle   = '#ffff66'
-    } else if(segment === GameControllerMouse.selectedEntity) {
-      Canvas.strokeStyle = '#7777ff'
-      Canvas.fillStyle   = '#7777ff'
-    } else {
-      Canvas.strokeStyle = '#66ff66'
-      Canvas.fillStyle   = '#66ff66'
-    }
+  },
+  renderDamageSegment(segment) {
+    GameView.renderModeWorld();
+    Canvas.beginPath();
+    Canvas.moveTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
+    Canvas.arc(
+      segment.planet.positionX,
+      segment.planet.positionY,
+      segment.maxSizeOffset(),
+      segment.planet.rotation + segment.radialOffset(),
+      segment.planet.rotation + segment.radialOffset() + segment.radialSize());
+    Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
+    Canvas.closePath();
+
+    Canvas.strokeStyle = this.colors.DAMAGED;
+    Canvas.fillStyle   = this.colors.DAMAGED;
     Canvas.fill();
   },
   checkHover: function(segment)

@@ -10,7 +10,7 @@ GameModelBounds = {
 
   frame: function()
   {
-    if(GameControllerMouse.mouseX && GameControllerMouse.mouseY)
+    if(GameControllerMouse.mouseX && GameControllerMouse.mouseY && GameControllerMouse.mouseDown)
     {
       this.scrollLeft();
       this.scrollRight();

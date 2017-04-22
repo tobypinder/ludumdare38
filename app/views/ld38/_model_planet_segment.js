@@ -4,6 +4,10 @@ var GameModelPlanetSegment = function(planet, index)
   this.index        = index;
   this.mouseHover   = false;
   this.mouseDown    = false;
+  this.maxOffset    = 10;
+
+  this.HP    = Math.random() * 500 + 500
+  this.maxHP = 1000
 
   this.isSelected = function()
   {
@@ -19,9 +23,13 @@ var GameModelPlanetSegment = function(planet, index)
   {
     this.mouseHover = false;
   },
-  this.sizeOffset   = function()
+  this.sizeOffset = function()
   {
-    return 10;
+    return (this.planet.radius + this.maxOffset) * (this.HP / this.maxHP);
+  }
+  this.maxSizeOffset = function()
+  {
+    return this.planet.radius + this.maxOffset;
   }
   this.radialOffset = function() {
     var percentage = this.index / this.planet.segmentCount

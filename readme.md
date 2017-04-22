@@ -26,6 +26,8 @@ Design:
 
   * [ ] Selectable Moon segment objects
   * [ ] Parallax Starfield
+  * [ ] Max Perimeter for scrolling.
+  * [ ] Scroll using click?
   * [ ] Better moon seeding - make each game different rather than just fixed radius.
   * [ ] Basic enemy object
   * [ ] Basic bullet object
