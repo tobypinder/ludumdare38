@@ -1,6 +1,5 @@
 var GameViewPlanetSegment = {
   frame: function() {
-
   },
   render: function(segment) {
     GameView.renderModeWorld();
@@ -13,33 +12,11 @@ var GameViewPlanetSegment = {
       segment.planet.radius   + segment.sizeOffset(),
       segment.planet.rotation + segment.radialOffset(),
       segment.planet.rotation + segment.radialOffset() + segment.radialSize());
-
-    console.log(
-      segment.planet.positionX,
-      segment.planet.positionY,
-      segment.planet.radius   + segment.sizeOffset(),
-      segment.planet.rotation + segment.radialOffset(),
-      segment.planet.rotation + segment.radialOffset() + segment.radialSize()
-    )
     Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.closePath();
 
-    var inSegment = Canvas.isPointInPath(GameControllerMouse.mouseX, GameControllerMouse.mouseY)
-    if(inSegment) {
-      segment.mouseHover = true;
-    } else {
-      segment.mouseHover = false;
-    }
-
-    var inSegment = Canvas.isPointInPath(GameControllerMouse.clickX, GameControllerMouse.clickY)
-    if(inSegment && GameControllerMouse.unhandledMouseDown) {
-      // Handle the mouse down by selecting this segment
-      GameControllerMouse.unhandledMouseDown = false
-      segment.mouseDown = true;
-    } else if(!GameControllerMouse.mouseDown){
-      // If the mouse isn't physically down we can deselect the element.
-      segment.mouseDown = false;
-    }
+    this.checkHover(segment);
+    this.checkMouseDown(segment);
 
     if(segment.mouseDown) {
       Canvas.strokeStyle = '#ff7777'
@@ -55,4 +32,33 @@ var GameViewPlanetSegment = {
 
     Canvas.fill();
   },
+  checkHover: function(segment)
+  {
+    var hoveringOverSegment = Canvas.isPointInPath(
+      GameControllerMouse.mouseX,
+      GameControllerMouse.mouseY
+    )
+
+    if(hoveringOverSegment) {
+      segment.mouseHover = true;
+    } else {
+      segment.mouseHover = false;
+    }
+  },
+  checkMouseDown:function(segment)
+  {
+    var clickingSegment = Canvas.isPointInPath(
+      GameControllerMouse.clickX,
+      GameControllerMouse.clickY
+    )
+
+    if(clickingSegment && GameControllerMouse.unhandledMouseDown) {
+      // Handle the mouse down by selecting this segment
+      GameControllerMouse.unhandledMouseDown = false
+      segment.mouseDown = true;
+    } else if(!GameControllerMouse.mouseDown){
+      // If the mouse isn't physically down we can deselect the element.
+      segment.mouseDown = false;
+    }
+  }
 }
