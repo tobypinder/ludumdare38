@@ -28,10 +28,8 @@ var GameControllerMouse = {
     this.clickX = event.clientX - rect.left,
     this.clickY = event.clientY - rect.top
 
-    var transform = GameView.worldTransform
-
-    transform.invert()
-    var gamePoint = transform.transformPoint(this.clickX, this.clickY)
+    var transform    = GameView.worldTransform.invert()
+    var gamePoint    = transform.transformPoint(this.clickX, this.clickY)
     this.worldClickX = gamePoint[0]
     this.worldClickY = gamePoint[1]
 
@@ -50,10 +48,8 @@ var GameControllerMouse = {
     this.mouseX = event.clientX - rect.left,
     this.mouseY = event.clientY - rect.top
 
-    var transform = GameView.worldTransform
-
-    transform.invert()
-    var gamePoint = transform.transformPoint(this.mouseX, this.mouseY)
+    var transform    = GameView.worldTransform.invert()
+    var gamePoint    = transform.transformPoint(this.mouseX, this.mouseY)
     this.worldMouseX = gamePoint[0]
     this.worldMouseY = gamePoint[1]
   }

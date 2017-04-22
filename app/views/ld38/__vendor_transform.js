@@ -70,6 +70,8 @@ Transform.prototype.invert = function() {
   this.m[3] = m3;
   this.m[4] = m4;
   this.m[5] = m5;
+
+  return this;
 };
 
 Transform.prototype.rotate = function(rad) {
