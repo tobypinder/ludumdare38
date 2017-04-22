@@ -26,17 +26,28 @@ var GameView = {
   frame:function()
   {
     this.frameClean();
-    // render objects.
-    GameViewPlanet.frame();
-    // UI
-    GameViewFPS.frame();
-    // Debug
-    GameViewMouse.frame();
 
-    this.benchmarkEnd()
-    this.benchmarkStart()
+    this.frameRenderWorld();
+    this.frameRenderUI();
+    this.frameRenderDebug();
+
+    this.benchmarkEnd();
+    this.benchmarkStart();
 
     requestAnimationFrame(GameView.frame.bind(this));
+  },
+  frameRenderWorld: function()
+  {
+    GameViewPlanet.frame();
+  },
+  frameRenderUI: function()
+  {
+    // TODO
+  },
+  frameRenderDebug:function()
+  {
+    GameViewFPS.frame();
+    GameViewMouse.frame();
   },
   frameClean:function()
   {
@@ -74,35 +85,25 @@ var GameView = {
 
   xGameOffset:function()
   {
-    var base = this.WINDOW_WIDTH / 2
+    var base = this.WINDOW_WIDTH / 2;
     return base + (GameModelWorld.offsetX * GameModelWorld.zoom);
   },
   yGameOffset:function()
   {
-    var base = this.WINDOW_HEIGHT / 2
+    var base = this.WINDOW_HEIGHT / 2;
     return base + (GameModelWorld.offsetY * GameModelWorld.zoom);
-  },
-  xGameInverseOffset:function()
-  {
-    var base = this.WINDOW_WIDTH / 2
-    return base + (GameModelWorld.offsetX / GameModelWorld.zoom);
-  },
-  yGameInverseOffset:function()
-  {
-    var base = this.WINDOW_HEIGHT / 2
-    return base + (GameModelWorld.offsetY);
   },
   gameZoom:function()
   {
-    return GameModelWorld.zoom
+    return GameModelWorld.zoom;
   },
 
   benchmarkStart:function() {
-    this.stats.timeStart = new Date().getTime()
+    this.stats.timeStart = new Date().getTime();
   },
   benchmarkEnd:function(){
-    this.stats.timeEnd = new Date().getTime()
-    this.stats.frameTime = this.stats.timeEnd - this.stats.timeStart
+    this.stats.timeEnd = new Date().getTime();
+    this.stats.frameTime = this.stats.timeEnd - this.stats.timeStart;
     if(this.stats.frameTime > 0 )
     {
       this.stats.fps = Math.round(1000/this.stats.frameTime)
