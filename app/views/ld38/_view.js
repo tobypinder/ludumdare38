@@ -2,6 +2,7 @@ var GameView = {
   WINDOW_WIDTH:800,
   WINDOW_HEIGHT:600,
   ctx:null,
+  render_mode: 'game'
   stats: {
     MAX_FPS:60,
     computedFrames:0,
@@ -16,11 +17,10 @@ var GameView = {
     //window.addEventListener("keyup",GameKeyListener.keyUp,true);
     var ctx=c.getContext('2d');
     this.ctx = ctx;
-    //GameViewParticles.init();
     ctx.font="20px electrolizeregular";
     requestAnimationFrame(GameView.frame.bind(this));
   },
-  frame:function(_this)
+  frame:function()
   {
     this.frameClean();
     //render objects.
@@ -40,7 +40,7 @@ var GameView = {
   renderModeUI:function()
   {
     this.ctx.setTransform(1, 0, 0, 1, -0.5, -0.5)
-    //GameModel.rendering.mode = 'ui'
+    this.render_mode = 'ui'
   },
   renderModeGame:function()
   {
@@ -52,7 +52,7 @@ var GameView = {
       -0.5,
       -0.5
     )
-    //GameModel.rendering.mode='game'
+    this.render_mode = 'game'
   },
 
   benchmarkStart:function() {
