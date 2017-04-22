@@ -8,21 +8,38 @@ var GameModelMoon = function()
     this.basePositionX     = this.positionX;
     this.basePositionY     = this.positionY;
     this.orbitPosition     = Math.random() * Util.Angle.FULL_PLANET // angle
-    this.orbitTime         = (20 + distance/10) * Util.Time.SECONDS;
+    this.orbitTime         = (60 + distance / 5) * Util.Time.SECONDS;
     this.orbitDirection    = 1 //or -1
     this.rotation          = 0
-    this.rotationTime      = 3 * Util.Time.SECONDS;
+    this.rotationTime      = (10 + distance / 8) * Util.Time.SECONDS;
     this.rotationDirection = 1 //or -1
+    this.segmentCount      = 12
+    this.segments          = []
+
+
 
     // Vary constants.
+    this.radius *= (1 + (0.1 * (Math.random() - 0.5)))
     this.orbitTime *= (1 + (0.2 * (Math.random() - 0.5)))
     //this.orbitDirection = Math.random() > 0.5 ? 1 : -1
     this.rotationTime *= (1 + (0.3 * (Math.random() - 0.5)))
     this.radius       *= (1 + (0.1 * (Math.random() - 0.5)))
 
+    for(var i=0; i<this.segmentCount; i++)
+    {
+      this.addMoonSegment(i);
+    }
+
     // Make sure initial positions are correct wrt rotations
     this.frame();
   }
+
+  this.addMoonSegment = function(index)
+  {
+    var segment = new GameModelMoonSegment(this, index);
+    this.segments.push(segment);
+  },
+
 
   this.frame = function()
   {

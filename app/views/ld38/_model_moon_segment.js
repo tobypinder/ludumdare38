@@ -1,13 +1,10 @@
-var GameModelPlanetSegment = function(planet, index)
+var GameModelMoonSegment = function(moon, index)
 {
-  this.planet       = planet;
-  this.index        = index;
-  this.mouseHover   = false;
-  this.mouseDown    = false;
-  this.maxOffset    = 0;
-
-  this.HP    = Math.random() * 250 + 750
-  this.maxHP = 1000
+  this.moon       = moon;
+  this.index      = index;
+  this.mouseHover = false;
+  this.mouseDown  = false;
+  this.maxOffset  = 0;
 
   this.isSelected = function()
   {
@@ -25,19 +22,19 @@ var GameModelPlanetSegment = function(planet, index)
   },
   this.sizeOffset = function()
   {
-    return (this.planet.radius + this.maxOffset) * (this.HP / this.maxHP);
+    return (this.moon.radius + this.maxOffset);
   }
   this.maxSizeOffset = function()
   {
-    return this.planet.radius + this.maxOffset;
+    return (this.moon.radius + this.maxOffset);
   }
   this.radialOffset = function() {
-    var percentage = this.index / this.planet.segmentCount
+    var percentage = this.index / this.moon.segmentCount
 
     return percentage * Util.Angle.FULL_PLANET
   }
   this.radialSize = function(){
-    return (Util.Angle.FULL_PLANET / this.planet.segmentCount)
+    return (Util.Angle.FULL_PLANET / this.moon.segmentCount)
   }
   this.frame = function(ms)
   {

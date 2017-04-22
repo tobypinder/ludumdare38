@@ -15,7 +15,7 @@ var GameModelPlanet = {
     this.positionX         = 0
     this.positionY         = 0
     this.rotation          = 0
-    this.rotationTime      = 10 * Util.Time.SECONDS
+    this.rotationTime      = 30 * Util.Time.SECONDS
     this.rotationDirection = 1
 
     this.addMoon(200);
