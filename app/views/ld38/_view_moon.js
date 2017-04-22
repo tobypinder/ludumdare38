@@ -2,7 +2,7 @@ var GameViewMoon = {
   render: function(moon)
   {
 
-    GameView.renderModeGame();
+    GameView.renderModeWorld();
     Canvas.strokeStyle = '#ff9999'
     Canvas.fillStyle = '#ff9999'
     Canvas.textAlign = 'right'
@@ -25,7 +25,4 @@ var GameViewMoon = {
       moon.rotation + (Util.Angle.FULL_PLANET / 16));
     Canvas.fill();
   },
-
-
-
 }

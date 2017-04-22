@@ -21,7 +21,7 @@ var GameViewMouse = {
     );
     Canvas.fill();
 
-    GameView.renderModeGame()
+    GameView.renderModeWorld()
     if(GameControllerMouse.unhandledMouseDown)
     {
       Canvas.strokeStyle = '#0000ff'

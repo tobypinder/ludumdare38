@@ -2,7 +2,7 @@ var GameViewPlanet = {
   ctx:   null,
   frame: function()
   {
-    GameView.renderModeGame();
+    GameView.renderModeWorld();
     Canvas.strokeStyle = '#ffffff'
     Canvas.fillStyle = '#ffffff'
     Canvas.textAlign = 'right'
@@ -17,8 +17,6 @@ var GameViewPlanet = {
 
 
     // Take the line out unless mouseovered
-    Canvas.strokeStyle = '#66ff66'
-    Canvas.fillStyle = '#66ff66'
     Canvas.beginPath();
     Canvas.moveTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.arc(
@@ -28,7 +26,16 @@ var GameViewPlanet = {
       GameModelPlanet.rotation,
       GameModelPlanet.rotation + (Util.Angle.FULL_PLANET / 16));
     Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
+    Canvas.closePath();
 
+    var inSegment = Canvas.isPointInPath(GameControllerMouse.mouseX, GameControllerMouse.mouseY)
+    if(inSegment) {
+      Canvas.strokeStyle = '#ffff66'
+      Canvas.fillStyle   = '#ffff66'
+    } else {
+      Canvas.strokeStyle = '#66ff66'
+      Canvas.fillStyle   = '#66ff66'
+    }
     Canvas.fill();
 
     $.each(GameModelPlanet.moons, this.renderMoon.bind(this))

@@ -2,6 +2,8 @@ var GameView = {
   WINDOW_WIDTH:800,
   WINDOW_HEIGHT:600,
   render_mode: 'game',
+  worldTransform: null,
+  uiTransform: null,
   stats: {
     MAX_FPS:60,
     computedFrames:0,
@@ -11,10 +13,13 @@ var GameView = {
     fps:0
   },
   init:function(){
-    var c=$('#game')[0];
+    this.worldTransform = new Transform()
+    this.uiTransform    = new Transform()
+
+    CanvasElement = document.getElementById('game');
     //window.addEventListener("keydown",GameKeyListener.keyDown,true);
     //window.addEventListener("keyup",GameKeyListener.keyUp,true);
-    Canvas = c.getContext('2d');
+    Canvas = CanvasElement.getContext('2d');
     Canvas.font="20px electrolizeregular";
     requestAnimationFrame(GameView.frame.bind(this));
   },
@@ -24,7 +29,7 @@ var GameView = {
     // render objects.
     GameViewPlanet.frame();
     // UI
-    GameViewFPS.frame()
+    GameViewFPS.frame();
     // Debug
     GameViewMouse.frame();
 
@@ -41,20 +46,30 @@ var GameView = {
   },
   renderModeUI:function()
   {
-    Canvas.setTransform(1, 0, 0, 1, -0.5, -0.5)
+    this.uiTransform = new Transform(1, 0, 0, 1, -0.5, -0.5)
+
     this.render_mode = 'ui'
+    this.applyTransform(this.uiTransform);
   },
-  renderModeGame:function()
+  renderModeWorld:function()
   {
-    Canvas.setTransform(
-      this.gameZoom(),
+    this.worldTransform = new Transform(
+      GameView.gameZoom(),
       0,
       0,
-      this.gameZoom(),
-      -0.5 + this.xGameOffset(),
-      -0.5 + this.yGameOffset()
-    )
-    this.render_mode = 'game'
+      GameView.gameZoom(),
+      -0.5 + GameView.xGameOffset(),
+      -0.5 + GameView.yGameOffset()
+    );
+
+    this.render_mode = 'world'
+    this.applyTransform(this.worldTransform);
+  },
+
+  applyTransform: function(t)
+  {
+    var m = t.toArray(); //matrix pieces
+    Canvas.setTransform(m[0], m[1], m[2], m[3], m[4], m[5])
   },
 
   xGameOffset:function()

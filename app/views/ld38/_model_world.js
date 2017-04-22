@@ -12,7 +12,11 @@ var GameModelWorld = {
   frame: function(ms)
   {
     GameModelPlanet.frame(ms)
+    this.scrollBounds();
     //this.offsetX += (Math.random() - 0.5) / 1000 * ms * 100
     //this.offsetY += (Math.random() - 0.5) / 1000 * ms * 100
+  },
+  scrollBounds: function()
+  {
   }
 }
