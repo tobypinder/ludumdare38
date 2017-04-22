@@ -3,25 +3,36 @@ var GameModel = {
   stats: {
     MAX_FPS:60,
     computedFrames:0,
-    timeStart:null,
-    timeEnd:null,
+    timeStart:new Date().getTime(),
+    timeEnd:new Date().getTime(),
     frameTime:0,
     fps:0
   },
   init:function() {
-    this.engineTimer = setInterval(GameController.loop, (1000 / GameModel.stats.MAX_FPS));
+    this.engineTimer = setInterval(GameModel.frame.bind(this), (1000 / GameModel.stats.MAX_FPS));
+
+    GameModelPlanet.init();
   },
   frame:function(){
-    // do stuff.
-    this.benchmarkEnd();
-    this.benchmarkStart();
+    var ms = GameModel.stats.frameTime
+    if(ms >= 1) {
+      // Only work if at least a millisecond has elapsed!
+      GameModelWorld.frame(ms)
+    }
+
+    this.timingEnd();
+    this.timingStart();
   },
-  benchmarkStart:function() {
+  timingStart:function() {
     this.stats.timeStart = new Date().getTime()
   },
-  benchmarkEnd:function(){
+  timingEnd:function(){
     this.stats.timeEnd = new Date().getTime()
     this.stats.frameTime = this.stats.timeEnd - this.stats.timeStart
+    if(this.stats.frameTime > 1000) {
+      console.warn('Model Frame time too large: ', this.stats.frameTime)
+      this.stats.frameTime = 1000
+    }
     if(this.stats.frameTime > 0 )
     {
       this.stats.fps = Math.round(1000/this.stats.frameTime)

@@ -3,11 +3,6 @@ var GameController = {
   {
     GameModel.init();
     GameView.init();
-  },
-  loop:function()
-  {
-    GameModel.frame();
-    GameModel.benchmarkEnd();
-    GameModel.benchmarkStart();
+    GameControllerMouse.init();
   }
 }

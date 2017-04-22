@@ -23,17 +23,27 @@
   font-style: normal;
 }
 
-.hero_unit *{
+.hero_unit * {
   font-family: "electrolizeregular" !important
 }
 </style>
 
 <script>
-  <%= render 'state.js' %>
+  <%= render 'controller.js' %>
+  <%= render 'controller_mouse.js' %>
   <%= render 'model.js' %>
+  <%= render 'model_moon.js' %>
+  <%= render 'model_planet.js' %>
+  <%= render 'model_world.js' %>
+  <%= render 'state.js' %>
+  <%= render 'util.js' %>
   <%= render 'view.js' %>
   <%= render 'view_fps.js' %>
-  <%= render 'controller.js' %>
+  <%= render 'view_moon.js' %>
+  <%= render 'view_mouse.js' %>
+  <%= render 'view_planet.js' %>
+
+  <%= render '_vendor_transform.js' %>
 
   $(function(){
     GameState.start({});

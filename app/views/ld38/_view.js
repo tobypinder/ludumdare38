@@ -1,8 +1,7 @@
 var GameView = {
   WINDOW_WIDTH:800,
   WINDOW_HEIGHT:600,
-  ctx:null,
-  render_mode: 'game'
+  render_mode: 'game',
   stats: {
     MAX_FPS:60,
     computedFrames:0,
@@ -15,16 +14,19 @@ var GameView = {
     var c=$('#game')[0];
     //window.addEventListener("keydown",GameKeyListener.keyDown,true);
     //window.addEventListener("keyup",GameKeyListener.keyUp,true);
-    var ctx=c.getContext('2d');
-    this.ctx = ctx;
-    ctx.font="20px electrolizeregular";
+    Canvas = c.getContext('2d');
+    Canvas.font="20px electrolizeregular";
     requestAnimationFrame(GameView.frame.bind(this));
   },
   frame:function()
   {
     this.frameClean();
-    //render objects.
-    GameViewFPS.frame(this.ctx);
+    // render objects.
+    GameViewPlanet.frame();
+    // UI
+    GameViewFPS.frame()
+    // Debug
+    GameViewMouse.frame();
 
     this.benchmarkEnd()
     this.benchmarkStart()
@@ -34,25 +36,50 @@ var GameView = {
   frameClean:function()
   {
     this.renderModeUI();
-    this.ctx.fillStyle="#000000";
-    this.ctx.fillRect(0, 0, 800, 600);
+    Canvas.fillStyle="#000000";
+    Canvas.fillRect(0, 0, 800, 600);
   },
   renderModeUI:function()
   {
-    this.ctx.setTransform(1, 0, 0, 1, -0.5, -0.5)
+    Canvas.setTransform(1, 0, 0, 1, -0.5, -0.5)
     this.render_mode = 'ui'
   },
   renderModeGame:function()
   {
-    this.ctx.setTransform(
-      1,
+    Canvas.setTransform(
+      this.gameZoom(),
       0,
       0,
-      1,
-      -0.5,
-      -0.5
+      this.gameZoom(),
+      -0.5 + this.xGameOffset(),
+      -0.5 + this.yGameOffset()
     )
     this.render_mode = 'game'
+  },
+
+  xGameOffset:function()
+  {
+    var base = this.WINDOW_WIDTH / 2
+    return base + (GameModelWorld.offsetX * GameModelWorld.zoom);
+  },
+  yGameOffset:function()
+  {
+    var base = this.WINDOW_HEIGHT / 2
+    return base + (GameModelWorld.offsetY * GameModelWorld.zoom);
+  },
+  xGameInverseOffset:function()
+  {
+    var base = this.WINDOW_WIDTH / 2
+    return base + (GameModelWorld.offsetX / GameModelWorld.zoom);
+  },
+  yGameInverseOffset:function()
+  {
+    var base = this.WINDOW_HEIGHT / 2
+    return base + (GameModelWorld.offsetY);
+  },
+  gameZoom:function()
+  {
+    return GameModelWorld.zoom
   },
 
   benchmarkStart:function() {
