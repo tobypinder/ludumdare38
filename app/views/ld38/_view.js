@@ -1,7 +1,7 @@
 var GameView = {
   WINDOW_WIDTH:800,
   WINDOW_HEIGHT:600,
-  render_mode: 'game',
+  renderMode: 'world',
   worldTransform: null,
   uiTransform: null,
   stats: {
@@ -59,7 +59,7 @@ var GameView = {
   {
     this.uiTransform = new Transform(1, 0, 0, 1, -0.5, -0.5)
 
-    this.render_mode = 'ui'
+    this.renderMode = 'ui'
     this.applyTransform(this.uiTransform);
   },
   renderModeWorld:function()
@@ -73,7 +73,7 @@ var GameView = {
       -0.5 + GameView.yGameOffset()
     );
 
-    this.render_mode = 'world'
+    this.renderMode = 'world'
     this.applyTransform(this.worldTransform);
   },
 

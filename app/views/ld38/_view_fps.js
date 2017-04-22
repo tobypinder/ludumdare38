@@ -6,12 +6,17 @@ var GameViewFPS = {
     Canvas.strokeStyle = '#ffffff'
     Canvas.fillStyle = '#ffffff'
     Canvas.textAlign = 'right'
+    Canvas.fillText(GameModelWorld.zoom, GameView.WINDOW_WIDTH-450, GameView.WINDOW_HEIGHT-65);
+
+    Canvas.strokeStyle = '#ffffff'
+    Canvas.fillStyle = '#ffffff'
+    Canvas.textAlign = 'right'
     Canvas.fillText(GameControllerMouse.mouseX + ", " + GameControllerMouse.mouseY, GameView.WINDOW_WIDTH-450, GameView.WINDOW_HEIGHT-35);
 
     Canvas.strokeStyle = '#ffffff'
     Canvas.fillStyle = '#ffffff'
     Canvas.textAlign = 'right'
-    Canvas.fillText(GameControllerMouse.worldMouseX + ", " + GameControllerMouse.worldMouseY, GameView.WINDOW_WIDTH-450, GameView.WINDOW_HEIGHT-5);
+    Canvas.fillText(Math.floor(GameControllerMouse.worldMouseX) + ", " + Math.floor(GameControllerMouse.worldMouseY), GameView.WINDOW_WIDTH-450, GameView.WINDOW_HEIGHT-5);
 
     Canvas.strokeStyle = '#ffffff'
     Canvas.fillStyle = '#ffffff'

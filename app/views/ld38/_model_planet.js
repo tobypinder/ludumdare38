@@ -1,11 +1,13 @@
 var GameModelPlanet = {
-  radius: 0,
-  positionX: 0,
-  positionY: 0,
-  rotation: 0,
-  rotationTime: 0, // x Util.Time.SECONDS
+  radius:            0,
+  positionX:         0,
+  positionY:         0,
+  rotation:          0,
+  rotationTime:      0, // x Util.Time.SECONDS
   rotationDirection: 1, //or -1
-  moons: [],
+  segmentCount:      12,
+  moons:             [],
+  segments:          [],
 
   init: function()
   {
@@ -23,13 +25,24 @@ var GameModelPlanet = {
     this.addMoon(600);
     this.addMoon(800);
     this.addMoon(1000);
+
+    for(var i=0; i<this.segmentCount; i++)
+    {
+      this.addPlanetSegment(i);
+    }
   },
 
   addMoon: function(distance)
   {
     var moon = new GameModelMoon();
     moon.init(distance);
-    this.moons.push(moon)
+    this.moons.push(moon);
+  },
+
+  addPlanetSegment: function(index)
+  {
+    var segment = new GameModelPlanetSegment(this, index);
+    this.segments.push(segment);
   },
 
   frame: function(ms)

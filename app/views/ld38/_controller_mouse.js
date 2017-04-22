@@ -1,19 +1,22 @@
 var GameControllerMouse = {
-  mouseX: 0,
-  mouseY: 0,
-  worldMouseX: 0,
-  worldMouseY: 0,
-  clickX: 0,
-  clickY: 0,
-  worldClickX: 0,
-  worldClickY: 0,
+  mouseX: null,
+  mouseY: null,
+  worldMouseX: null,
+  worldMouseY: null,
+  clickX: null,
+  clickY: null,
+  worldClickX: null,
+  worldClickY: null,
   unhandledMouseDown: false,
+  unhandledWheelDown: false,
+  unhandledWheelUp: false,
 
   init:function()
   {
     CanvasElement.addEventListener('mousemove', this.onMouseMove.bind(this))
     CanvasElement.addEventListener('mousedown', this.onMouseDown.bind(this))
     CanvasElement.addEventListener('mouseup',   this.onMouseUp.bind(this))
+    CanvasElement.addEventListener('wheel',     this.onWheel.bind(this));
   },
   onMouseMove: function(event)
   {
@@ -39,6 +42,17 @@ var GameControllerMouse = {
   {
     this.unhandledMouseDown = false;
     // TODO: Handle!
+    event.preventDefault();
+  },
+  onWheel: function(event)
+  {
+    if(event.deltaY > 0)
+    {
+      this.unhandledWheelUp = true;
+    } else if(event.deltaY < 0)
+    {
+      this.unhandledWheelDown = true;
+    }
     event.preventDefault();
   },
 
