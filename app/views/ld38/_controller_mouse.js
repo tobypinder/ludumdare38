@@ -7,6 +7,7 @@ var GameControllerMouse = {
   clickY: null,
   worldClickX: null,
   worldClickY: null,
+  mouseDown: false,
   unhandledMouseDown: false,
   unhandledWheelDown: false,
   unhandledWheelUp: false,
@@ -24,6 +25,7 @@ var GameControllerMouse = {
   },
   onMouseDown: function(event)
   {
+    this.mouseDown = true;
     this.unhandledMouseDown = true;
     // TODO: Handle!
 
@@ -40,7 +42,12 @@ var GameControllerMouse = {
   },
   onMouseUp: function(event)
   {
+    this.mouseDown = false
     this.unhandledMouseDown = false;
+    this.clickX      = null
+    this.clickY      = null
+    this.worldClickX = null
+    this.worldClickY = null
     // TODO: Handle!
     event.preventDefault();
   },

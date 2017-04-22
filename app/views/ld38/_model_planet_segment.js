@@ -1,7 +1,9 @@
 var GameModelPlanetSegment = function(planet, index)
 {
-  this.planet       = planet
-  this.index        = index
+  this.planet       = planet;
+  this.index        = index;
+  this.mouseHover   = false;
+  this.mouseDown    = false;
   this.sizeOffset   = function()
   {
     return 10;
