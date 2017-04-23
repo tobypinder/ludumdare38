@@ -63,21 +63,28 @@ var GameModelWorld = {
   renderPlanetSegment: function(index, segment) {
     GameViewPlanetSegment.render(segment)
   },
+  nudgeTowardsMouse: function(durationHeld){
+    durationHeld = durationHeld / 1000
+    durationHeld = Math.max(1, Math.sqrt(durationHeld))
+    durationHeld = Math.min(durationHeld, 10)
+
+    this.teleportRelativeToMouse(1, 50 / durationHeld);
+  },
   teleportTowardsMouse: function(){
-    this.teleportRelativeToMouse(-1);
+    this.teleportRelativeToMouse(1, 5);
   },
   teleportAwayFromMouse: function(){
-    this.teleportRelativeToMouse(1);
+    this.teleportRelativeToMouse(-1, 5);
   },
-  teleportRelativeToMouse: function(direction){
+  teleportRelativeToMouse: function(direction, magnitude){
     if(GameControllerMouse.mouseX && GameControllerMouse.mouseY) {
-      var zoomAmount = Math.sqrt(GameModelWorld.zoom) * 10
+      var zoomAmount = GameModelWorld.zoom * magnitude
 
       var deltaX = (GameControllerMouse.mouseX - (GameView.WINDOW_WIDTH / 2))
       var deltaY = (GameControllerMouse.mouseY - (GameView.WINDOW_HEIGHT / 2))
 
-      this.offsetX += (deltaX / zoomAmount) * direction;
-      this.offsetY += (deltaY / zoomAmount) * direction;
+      this.offsetX -= (deltaX / zoomAmount) * direction;
+      this.offsetY -= (deltaY / zoomAmount) * direction;
     }
   },
   changeZoom: function(newZoom) {

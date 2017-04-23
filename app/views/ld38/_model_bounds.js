@@ -10,46 +10,11 @@ GameModelBounds = {
 
   frame: function()
   {
-    if(GameControllerMouse.mouseX && GameControllerMouse.mouseY && GameControllerMouse.mouseDown)
+    if(GameControllerMouse.rightMouseDown)
     {
-      this.scrollLeft();
-      this.scrollRight();
-      this.scrollUp();
-      this.scrollDown();
+      GameModelWorld.nudgeTowardsMouse(GameControllerMouse.durationHeld);
     }
     this.rezoom();
-  },
-  scrollLeft: function(){
-    if(GameControllerMouse.mouseX < this.bounds.x)
-    {
-      var multiplier = 1 - (GameControllerMouse.mouseX / this.bounds.x)
-      multiplier = Math.pow(multiplier, 0.5)
-      GameModelWorld.offsetX += this.magnitude.x * multiplier / GameModelWorld.zoom
-    }
-  },
-  scrollRight: function(){
-    if(GameControllerMouse.mouseX > (GameView.WINDOW_WIDTH - this.bounds.x))
-    {
-      var multiplier = 1 - ((GameView.WINDOW_WIDTH - GameControllerMouse.mouseX) / this.bounds.x)
-      multiplier = Math.pow(multiplier, 0.5)
-      GameModelWorld.offsetX -= this.magnitude.x * multiplier / GameModelWorld.zoom
-    }
-  },
-  scrollUp: function(){
-    if(GameControllerMouse.mouseY < this.bounds.y)
-    {
-      var multiplier = 1 - (GameControllerMouse.mouseY / this.bounds.y)
-      multiplier = Math.pow(multiplier, 0.5)
-      GameModelWorld.offsetY += this.magnitude.y * multiplier / GameModelWorld.zoom
-    }
-  },
-  scrollDown: function(){
-    if(GameControllerMouse.mouseY > (GameView.WINDOW_HEIGHT - this.bounds.y))
-    {
-      var multiplier = 1 - ((GameView.WINDOW_HEIGHT - GameControllerMouse.mouseY) / this.bounds.y)
-      multiplier = Math.pow(multiplier, 0.5)
-      GameModelWorld.offsetY -= this.magnitude.y * multiplier / GameModelWorld.zoom
-    }
   },
   rezoom: function()
   {

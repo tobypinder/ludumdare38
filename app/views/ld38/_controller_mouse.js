@@ -12,6 +12,7 @@ var GameControllerMouse = {
   unhandledWheelDown: false,
   unhandledWheelUp: false,
   selectedEntity: null,
+  durationHeld: 0,
 
   init:function() {
     CanvasElement.addEventListener('mousemove',   this.onMouseMove.bind(this))
@@ -20,7 +21,16 @@ var GameControllerMouse = {
     CanvasElement.addEventListener('wheel',       this.onWheel.bind(this));
     CanvasElement.addEventListener('click',       this.onClick.bind(this));
     CanvasElement.addEventListener('contextmenu', this.onContextMenu.bind(this));
+    this.durationHeld = 0
   },
+  frame: function(ms) {
+    if(this.mouseDown) {
+      this.durationHeld += ms
+    } else {
+      this.durationHeld = 0
+    }
+  },
+
   onMouseMove: function(event) {
     this.updateMousePosition(event);
   },
@@ -38,10 +48,15 @@ var GameControllerMouse = {
     this.worldClickX = gamePoint[0]
     this.worldClickY = gamePoint[1]
 
+    if(event.button == 2) {// Right
+      this.rightMouseDown = true
+    }
+
     event.preventDefault();
   },
   onMouseUp: function(event) {
-    this.mouseDown = false
+    this.mouseDown = false;
+    this.rightMouseDown = false;
     this.unhandledMouseDown = false;
     this.clickX      = null
     this.clickY      = null

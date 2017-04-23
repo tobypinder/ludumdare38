@@ -21,6 +21,7 @@ var GameModel = {
       GameModelWorld.frame(ms)
     }
 
+    GameControllerMouse.frame(ms);
     this.timingEnd();
     this.timingStart();
   },
