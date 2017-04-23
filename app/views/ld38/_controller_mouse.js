@@ -17,11 +17,25 @@ var GameControllerMouse = {
   init:function() {
     CanvasElement.addEventListener('mousemove',   this.onMouseMove.bind(this))
     CanvasElement.addEventListener('mousedown',   this.onMouseDown.bind(this))
-    CanvasElement.addEventListener('mouseup',     this.onMouseUp.bind(this))
+    CanvasElement.addEventListener('mouseup',     this.onMouseUp.bind(this));
+    CanvasElement.addEventListener('dblclick',    this.onDoubleClick.bind(this)) // ???
     CanvasElement.addEventListener('wheel',       this.onWheel.bind(this));
     CanvasElement.addEventListener('click',       this.onClick.bind(this));
     CanvasElement.addEventListener('contextmenu', this.onContextMenu.bind(this));
-    this.durationHeld = 0
+    mouseX             =  null;
+    mouseY             =  null;
+    worldMouseX        =  null;
+    worldMouseY        =  null;
+    clickX             =  null;
+    clickY             =  null;
+    worldClickX        =  null;
+    worldClickY        =  null;
+    mouseDown          =  false;
+    unhandledMouseDown =  false;
+    unhandledWheelDown =  false;
+    unhandledWheelUp   =  false;
+    selectedEntity     =  null;
+    this.durationHeld  = 0
   },
   frame: function(ms) {
     if(this.mouseDown) {
@@ -65,6 +79,10 @@ var GameControllerMouse = {
     // TODO: Handle!
     event.preventDefault();
   },
+  onDoubleClick: function(event) {
+    this.selectedEntity = null;
+    /// ????
+  },
   onWheel: function(event) {
     if(event.deltaY < 0) {
       this.unhandledWheelUp = true;
@@ -81,6 +99,7 @@ var GameControllerMouse = {
   },
   selectEntity: function(entity) {
     this.selectedEntity = entity;
+    GameViewUI.hint = null
   },
   deselectEntity: function(entity) {
     if(this.selectedEntity == entity) {

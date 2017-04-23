@@ -15,7 +15,6 @@ var GameView = {
   init:function(){
     this.worldTransform = new Transform()
     this.uiTransform    = new Transform()
-
     GameViewUI.init();
 
     CanvasElement = document.getElementById('game');
@@ -29,9 +28,16 @@ var GameView = {
   {
     this.frameClean();
 
-    this.frameRenderWorld();
-    this.frameRenderUI();
-    this.frameRenderDebug();
+    switch(GameState.state) {
+      case "menu":
+        this.frameRenderStart();
+        break;
+      case "ingame":
+        this.frameRenderWorld();
+        this.frameRenderUI();
+        //this.frameRenderDebug();
+        break;
+    }
 
     this.benchmarkEnd();
     this.benchmarkStart();
@@ -86,6 +92,17 @@ var GameView = {
 
     this.renderMode = 'world'
     this.applyTransform(this.worldTransform);
+  },
+  frameRenderStart:function(){
+    Canvas.font=Util.Font.Huge;
+    Canvas.strokeStyle = "#ffffff"
+    Canvas.fillStyle = "#ffffff"
+    Canvas.textAlign = 'center'
+    Canvas.fillText(
+      'Click to Begin',
+      GameView.WINDOW_WIDTH / 2,
+      GameView.WINDOW_HEIGHT / 2
+    );
   },
 
   applyTransform: function(t)

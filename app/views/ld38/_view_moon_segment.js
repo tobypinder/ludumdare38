@@ -91,12 +91,12 @@ var GameViewMoonSegment = {
 
       Canvas.lineWidth = 8;
 
-      if(selected) {
-        Canvas.fillStyle = this.colors.SELECTED_VIEWCONE;
-        Canvas.strokeStyle = this.colors.SELECTED_VIEWCONE_BORDER;
-      } else if(show && targeting) {
+      if(show && targeting) {
         Canvas.fillStyle = this.colors.DETECTED_VIEWCONE;
         Canvas.strokeStyle = this.colors.DETECTED_VIEWCONE_BORDER;
+      } else if(selected) {
+        Canvas.fillStyle = this.colors.SELECTED_VIEWCONE;
+        Canvas.strokeStyle = this.colors.SELECTED_VIEWCONE_BORDER;
       } else if(show) {
         Canvas.fillStyle = this.colors.VIEWCONE;
         Canvas.strokeStyle = this.colors.VIEWCONE_BORDER;

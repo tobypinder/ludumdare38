@@ -1,6 +1,7 @@
 var GameViewUI = {
   PANEL_WIDTH:   300,
   PANEL_PADDING: 5,
+  HINT_OFFSET: 0,
   OFFSET_X: 0,
   TEXT_PADDING: 5,
   TEXT_HEIGHT: 20,
@@ -13,10 +14,12 @@ var GameViewUI = {
   COLOR_DARK_GREY: '55, 55, 55',
   COLOR_GREY: '127, 127, 127',
   hovering: false,
+  hint: null,
   panelHeight: 0,
   buttons: [],
   init:function(){
     this.OFFSET_X = GameView.WINDOW_WIDTH - this.PANEL_WIDTH - this.PANEL_PADDING;
+    this.HINT_OFFSET = this.TEXT_PADDING
     this.buttons  = [];
   },
   frame: function()
@@ -26,6 +29,7 @@ var GameViewUI = {
     Canvas.lineWidth = 1;
     if(GameControllerMouse.selectedEntity && GameControllerMouse.selectedEntity.name) {
       this.renderElementPanel(GameControllerMouse.selectedEntity);
+      this.renderHint();
     }
   },
   renderElementPanel: function(element) {
@@ -134,10 +138,46 @@ var GameViewUI = {
       Canvas.closePath();
     }
   },
+  renderHint: function(element) {
+    if(this.hint)
+    {
+      Canvas.strokeStyle = this.color(this.COLOR_WHITE)
+      Canvas.fillStyle = this.color(this.COLOR_WHITE)
+      Canvas.textAlign = 'center'
+      Canvas.fillText(
+        this.hint,
+        GameView.WINDOW_WIDTH / 2,
+        GameView.WINDOW_HEIGHT - this.HINT_OFFSET
+      );
+    }
+  },
   renderElementTurretUpgradeOptions: function(element) {
     if(element.canPlaceTurret && element.canPlaceTurret()) {
-      new GameViewUIButton('Buy Turret', function() { this.purchaseTurret() }.bind(element))
+      new GameViewUIButton(
+        'Buy Missile Turret',
+        function() { this.purchaseTurret('missile') }.bind(element),
+        'Missile Turrets are standard in every way.'
+      );
+      this.spacer();
+
+      new GameViewUIButton(
+        'Buy Sniper Turret',
+        function() { this.purchaseTurret('sniper') }.bind(element),
+        'Sniper Turrets have long range but they pack a punch!'
+      ),
+      this.spacer();
+      new GameViewUIButton(
+        'Buy Shotgun Turret',
+        function() { this.purchaseTurret('shotgun') }.bind(element),
+        'Sprays hapless enemies with a maelstrom of bullets if they get too close!'
+      )
     }
+  },
+  spacer: function() {
+    this.panelHeight += 2
+  },
+  addHint: function(hint){
+    this.hint = hint;
   },
   color: function(colorString)
   {

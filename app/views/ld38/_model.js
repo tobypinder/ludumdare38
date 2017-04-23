@@ -9,10 +9,9 @@ var GameModel = {
     fps:0
   },
   init:function() {
-    this.engineTimer = setInterval(GameModel.frame.bind(this), (1000 / GameModel.stats.MAX_FPS));
-
     GameModelWorld.init();
     GameModelPlanet.init();
+    this.engineTimer = setInterval(GameModel.frame.bind(this), (1000 / GameModel.stats.MAX_FPS));
   },
   frame:function(){
     var ms = GameModel.stats.frameTime

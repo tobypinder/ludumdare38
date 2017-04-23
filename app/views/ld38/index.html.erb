@@ -52,6 +52,7 @@
   <%= render 'model_planet_segment.js' %>
   <%= render 'model_world.js' %>
   <%= render 'model_turret.js' %>
+  <%= render 'model_turret_factory.js' %>
   <%= render 'state.js' %>
   <%= render 'util.js' %>
   <%= render 'view.js' %>
@@ -69,6 +70,6 @@
   <%= render '_vendor_transform.js' %>
 
   $(function(){
-    GameState.start();
+    GameState.load();
   });
 </script>

@@ -6,17 +6,19 @@ var GameModelTurret = function(segment)
   this.positionY    = segment.positionY;
   this.rotation     = segment.rotation;
   this.validTargets = []
+  this.firingCooldown   = 0
 
+  // Overwrite factory
   this.damage           = 100;
-  this.visibilityRadius = 2000;
-
-  this.fireRate       = 3000; //ms
-  this.firingCooldown = Math.random() * this.fireRate;
-  this.name           = 'Plain Turret'
-  this.bulletSpeed    = 75;
-
-  this.viewConeAngle    = Util.Angle.FULL_PLANET / this.moon.segmentCount
+  this.fireRate         = 3000; //ms
+  this.bulletSpeed      =  75;
   this.viewConeDistance = 1000
+  this.viewConeAngle    = 0
+
+  this.init = function() {
+    this.firingCooldown   = 0
+    this.updatePosition();
+  }
 
   this.frame = function()
   {

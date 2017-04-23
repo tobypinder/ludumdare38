@@ -1,12 +1,13 @@
-var GameViewUIButton = function(text, action) {
+var GameViewUIButton = function(text, action, hint) {
   this.text   = text
+  this.hint   = hint
   this.action = action
 
   var ui = GameViewUI
 
   ui.panelHeight +=  ui.TEXT_HEIGHT
 
-  Canvas.textAlign = 'right'
+  Canvas.textAlign = 'center'
   Canvas.lineWidth = 4;
   Canvas.beginPath();
 
@@ -34,6 +35,7 @@ var GameViewUIButton = function(text, action) {
   } else if(this.containsPoint(GameControllerMouse.mouseX, GameControllerMouse.mouseY)) {
     Canvas.strokeStyle = ui.color(ui.COLOR_GREEN)
     Canvas.fillStyle = ui.color(ui.COLOR_GREEN)
+    ui.addHint(this.hint);
   } else {
     Canvas.strokeStyle = ui.color(ui.COLOR_GREY)
     Canvas.fillStyle = ui.color(ui.COLOR_DARK_GREY)
@@ -46,7 +48,7 @@ var GameViewUIButton = function(text, action) {
 
   Canvas.strokeStyle = ui.color(ui.COLOR_WHITE)
   Canvas.fillStyle = ui.color(ui.COLOR_WHITE)
-  Canvas.fillText('Buy Turret', GameView.WINDOW_WIDTH - ui.PANEL_PADDING - ui.TEXT_PADDING, ui.panelHeight);
+  Canvas.fillText(text, this.x1 + (this.w / 2), ui.panelHeight);
 
 
 }

@@ -13,7 +13,7 @@ var GameModelMoon = function()
     this.rotation          = 0
     this.rotationTime      = (10 + (distance / 80)) * Util.Time.SECONDS;
     this.rotationDirection = 1 //or -1
-    this.segmentCount      = 12
+    this.segmentCount      = 8
     this.segments          = []
     this.name              = Util.Generator.moon();
 

@@ -10,18 +10,13 @@ var GameModelMoonSegment = function(moon, index)
 
   this.positionRadiusMultiplier = 0.8
 
-  if(Math.random() < 0.05)
-  {
-    this.turret = new GameModelTurret(this); // TODO: User must place these!
-  }
-
   this.canPlaceTurret = function() {
     return !(this.turret)
   }
 
-  this.purchaseTurret = function() {
-    console.log('You bought a turret!')
-    this.turret = new GameModelTurret(this);
+  this.purchaseTurret = function(type) {
+    GameViewUI.addHint('You bought a '+ type + ' turret!')
+    this.turret = new GameModelTurretFactory.build(this, type);
   }
 
   this.isSelected = function() {

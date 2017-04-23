@@ -26,6 +26,7 @@ var Util = {
     MINUTES: 60000
   },
   Font: {
+    Huge:     "64px electrolizeregular",
     Standard: "20px electrolizeregular",
     Small:    "16px electrolizeregular"
   },
