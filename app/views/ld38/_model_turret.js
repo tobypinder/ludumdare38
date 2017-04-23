@@ -15,8 +15,8 @@ var GameModelTurret = function(segment)
   this.name           = 'Plain Turret'
   this.bulletSpeed    = 25;
 
-  this.viewConeAngle    = Util.Angle.FULL_PLANET / 4
-  this.viewConeDistance = 2000
+  this.viewConeAngle    = Util.Angle.FULL_PLANET / this.moon.segmentCount
+  this.viewConeDistance = 1000
 
   this.frame = function()
   {
@@ -34,19 +34,20 @@ var GameModelTurret = function(segment)
     var startAngle = this.viewConeStartAngle();
     var endAngle   = this.viewConeEndAngle();
 
-    console.log(
-      Math.round(startAngle / Math.PI * 180),
-      Math.round(endAngle / Math.PI * 180)
-    )
-
     for(var i=enemyCount; i>=0; i--) {
       var enemy = GameModelWorld.enemies[i];
-      var dX = this.positionX - enemy.positionX
-      var dY = this.positionY - enemy.positionY
+      var dX = enemy.positionX - this.positionX
+      var dY = enemy.positionY - this.positionY
 
       var distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2))
       var angle    = Math.atan2(dY, dX);
       var proximity = distance <= this.viewConeSize()
+      if(endAngle < startAngle)
+      {
+        endAngle += Util.Angle.HALF_PLANET
+        angle    += Util.Angle.HALF_PLANET
+      }
+
       var included  = (angle >= startAngle) && (angle <= endAngle);
       if(proximity && included){
         targets.push(enemy)
@@ -78,7 +79,7 @@ var GameModelTurret = function(segment)
   }
 
   this.viewConeStartAngle = function() {
-    return this.viewConeMidpointAngle() - this.radialViewConeHalfSize()
+    return Util.Angle.Normalize(this.viewConeMidpointAngle() - this.radialViewConeHalfSize())
   }
 
   this.viewConeMidpointAngle = function() {
@@ -86,7 +87,7 @@ var GameModelTurret = function(segment)
   }
 
   this.viewConeEndAngle = function() {
-    return this.viewConeMidpointAngle() + this.radialViewConeHalfSize()
+    return Util.Angle.Normalize(this.viewConeMidpointAngle() + this.radialViewConeHalfSize())
   }
 
   this.fire = function(target) {

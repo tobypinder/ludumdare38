@@ -41,9 +41,9 @@ var GameModelMoon = function()
 
   this.frame = function()
   {
-    var ms = GameModel.stats.frameTime
+    var ms = GameModel.stats.frameTime;
     this.rotate(ms);
-    this.orbit(ms)
+    this.orbit(ms);
 
     for(var i=0; i<this.segmentCount; i++)
     {
@@ -54,15 +54,7 @@ var GameModelMoon = function()
   this.orbit = function(ms)
   {
     this.orbitPosition += this.orbitDirection * (ms / this.orbitTime) * (Util.Angle.FULL_PLANET)
-
-    if(this.orbitPosition > Util.Angle.HALF_PLANET)
-    {
-      this.orbitPosition -= Util.Angle.FULL_PLANET
-    }
-    if(this.orbitPosition < -Util.Angle.HALF_PLANET)
-    {
-      this.orbitPosition += Util.Angle.FULL_PLANET
-    }
+    this.orbitPosition = Util.Angle.Normalize(this.orbitPosition)
 
     this.positionX = Math.cos(this.orbitPosition) * this.basePositionX - Math.sin(this.orbitPosition) * this.basePositionY
     this.positionY = Math.sin(this.orbitPosition) * this.basePositionX + Math.cos(this.orbitPosition) * this.basePositionY
@@ -71,14 +63,6 @@ var GameModelMoon = function()
   this.rotate = function(ms)
   {
     this.rotation += this.rotationDirection * (ms / this.rotationTime) * (Util.Angle.FULL_PLANET)
-
-    if(this.rotation > Util.Angle.HALF_PLANET)
-    {
-      this.rotation -= Util.Angle.FULL_PLANET
-    }
-    if(this.rotation < -Util.Angle.HALF_PLANET)
-    {
-      this.rotation += Util.Angle.FULL_PLANET
-    }
+    this.rotation = Util.Angle.Normalize(this.rotation)
   }
 }

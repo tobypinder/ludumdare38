@@ -1,7 +1,25 @@
 var Util = {
   Angle: {
     HALF_PLANET: (Math.PI),
-    FULL_PLANET: (2 * Math.PI)
+    FULL_PLANET: (2 * Math.PI),
+    Normalize: function(angle) {
+      var unchanged = false
+      while(!unchanged) {
+        unchanged = true;
+        if(angle > this.HALF_PLANET)
+        {
+          unchanged = false
+          angle -= this.FULL_PLANET
+        }
+        if(angle < -this.HALF_PLANET)
+        {
+          unchanged = false
+          angle += this.FULL_PLANET
+        }
+      }
+
+      return angle
+    }
   },
   Time: {
     SECONDS: 1000,

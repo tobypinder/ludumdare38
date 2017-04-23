@@ -75,7 +75,7 @@ GameModelBullet = function(source, target, validTargets) {
 
   this.checkCollisionWith = function(target) {
     if(target && target.containsPoint(this.positionX, this.positionY)) {
-      target.shotBy(this)
+      target.shotBy(this);
       this.kill();
     }
   };
@@ -89,17 +89,8 @@ GameModelBullet = function(source, target, validTargets) {
     var deltaY  = this.positionY - this.target.positionY
 
     this.targetRotation = Math.atan2(deltaY, deltaX)
-
-    this.rotation = this.targetRotation //* (ms / this.rotationSpeed)
-    //this.rotation  = this.targetRotation
-    if(this.rotation > Util.Angle.HALF_PLANET)
-    {
-      this.rotation -= Util.Angle.FULL_PLANET
-    }
-    if(this.rotation < -Util.Angle.HALF_PLANET)
-    {
-      this.rotation += Util.Angle.FULL_PLANET
-    }
+    this.rotation       = this.targetRotation //* (ms / this.rotationSpeed)
+    this.rotation       = Util.Angle.Normalize(this.rotation)
   }
 
   this.speed = function(){

@@ -86,15 +86,7 @@ GameModelEnemy = function() {
   this.rotateAroundPlanet = function(ms)
   {
     this.rotation += this.rotationDirection * (ms / this.rotationTime) * (Util.Angle.FULL_PLANET)
-
-    if(this.rotation > Util.Angle.HALF_PLANET)
-    {
-      this.rotation -= Util.Angle.FULL_PLANET
-    }
-    if(this.rotation < -Util.Angle.HALF_PLANET)
-    {
-      this.rotation += Util.Angle.FULL_PLANET
-    }
+    this.rotation = Util.Angle.Normalize(this.rotation)
   }
 
   this.attemptToFire = function() {
