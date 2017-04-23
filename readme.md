@@ -24,16 +24,16 @@ Design:
 
 ##TODO:
 
-  * [ ] Selectable Moon segment objects
+  * [X] Selectable Moon segment objects
+  * [X] Basic bullet object
+  * [X] Basic enemy object
+  * [X] Segment Selection UX
+  * [ ] Building UX - Towers
   * [ ] Parallax Starfield
   * [ ] Max Perimeter for scrolling.
-  * [ ] Scroll using click?
+  * [ ] Scroll using click? - Scrollwheel relative to mouse position
   * [ ] Better moon seeding - make each game different rather than just fixed radius.
-  * [ ] Basic enemy object
-  * [ ] Basic bullet object
   * [ ] Loss condition (segment lost)
-  * [ ] Segment Selection UX
   * [ ] Building UX - Basic resources
-  * [ ] Building UX - Towers
   * [ ] Enemy Waves and Scaling
   * [ ] Menus/UX

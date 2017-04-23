@@ -13,7 +13,7 @@ var GameModelTurret = function(segment)
   this.fireRate       = 3000; //ms
   this.firingCooldown = Math.random() * this.fireRate;
   this.name           = 'Plain Turret'
-  this.bulletSpeed    = 25;
+  this.bulletSpeed    = 75;
 
   this.viewConeAngle    = Util.Angle.FULL_PLANET / this.moon.segmentCount
   this.viewConeDistance = 1000

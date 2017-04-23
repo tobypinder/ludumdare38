@@ -13,8 +13,7 @@ var GameControllerMouse = {
   unhandledWheelUp: false,
   selectedEntity: null,
 
-  init:function()
-  {
+  init:function() {
     CanvasElement.addEventListener('mousemove',   this.onMouseMove.bind(this))
     CanvasElement.addEventListener('mousedown',   this.onMouseDown.bind(this))
     CanvasElement.addEventListener('mouseup',     this.onMouseUp.bind(this))
@@ -22,12 +21,10 @@ var GameControllerMouse = {
     CanvasElement.addEventListener('click',       this.onClick.bind(this));
     CanvasElement.addEventListener('contextmenu', this.onContextMenu.bind(this));
   },
-  onMouseMove: function(event)
-  {
+  onMouseMove: function(event) {
     this.updateMousePosition(event);
   },
-  onMouseDown: function(event)
-  {
+  onMouseDown: function(event) {
     this.mouseDown = true;
     this.unhandledMouseDown = true;
     // TODO: Handle!
@@ -43,8 +40,7 @@ var GameControllerMouse = {
 
     event.preventDefault();
   },
-  onMouseUp: function(event)
-  {
+  onMouseUp: function(event) {
     this.mouseDown = false
     this.unhandledMouseDown = false;
     this.clickX      = null
@@ -54,28 +50,27 @@ var GameControllerMouse = {
     // TODO: Handle!
     event.preventDefault();
   },
-  onWheel: function(event)
-  {
-    if(event.deltaY > 0)
-    {
+  onWheel: function(event) {
+    if(event.deltaY < 0) {
       this.unhandledWheelUp = true;
-    } else if(event.deltaY < 0)
-    {
+    } else if(event.deltaY > 0) {
       this.unhandledWheelDown = true;
     }
     event.preventDefault();
   },
-  onClick: function(event)
-  {
+  onClick: function(event) {
     event.preventDefault();
   },
-  onContextMenu: function(event)
-  {
+  onContextMenu: function(event) {
     event.preventDefault();
   },
-  selectEntity: function(entity)
-  {
+  selectEntity: function(entity) {
     this.selectedEntity = entity;
+  },
+  deselectEntity: function(entity) {
+    if(this.selectedEntity == entity) {
+      this.selectedEntity = null;
+    }
   },
   updateMousePosition: function(event)
   {
@@ -83,9 +78,14 @@ var GameControllerMouse = {
     this.mouseX = event.clientX - rect.left,
     this.mouseY = event.clientY - rect.top
 
+    this.updateMouseWorldPosition();
+  },
+  updateMouseWorldPosition: function()
+  {
     var transform    = GameView.worldTransform.invert()
     var gamePoint    = transform.transformPoint(this.mouseX, this.mouseY)
     this.worldMouseX = gamePoint[0]
     this.worldMouseY = gamePoint[1]
   }
+
 }

@@ -1,6 +1,7 @@
 var GameViewUI = {
   PANEL_WIDTH:   300,
   PANEL_PADDING: 5,
+  OFFSET_X: 0,
   TEXT_PADDING: 5,
   TEXT_HEIGHT: 20,
   COLOR_BLACK: '0, 0, 0',
@@ -9,8 +10,15 @@ var GameViewUI = {
   COLOR_GREEN: '0, 255, 0',
   COLOR_BLUE: '0, 0, 255',
   COLOR_CYAN: '0, 255, 255',
+  COLOR_DARK_GREY: '55, 55, 55',
+  COLOR_GREY: '127, 127, 127',
   hovering: false,
   panelHeight: 0,
+  buttons: [],
+  init:function(){
+    this.OFFSET_X = GameView.WINDOW_WIDTH - this.PANEL_WIDTH - this.PANEL_PADDING;
+    this.buttons  = [];
+  },
   frame: function()
   {
     GameView.renderModeUI()
@@ -29,6 +37,8 @@ var GameViewUI = {
     this.renderElementTurretName(element);
     this.renderElementHP(element);
     this.renderElementMP(element);
+    this.renderElementTurretUpgradeOptions(element);
+    // End Context Specific
     this.renderElementPanelBorder(element);
   },
   renderElementPanelBorder:function(element){
@@ -70,7 +80,7 @@ var GameViewUI = {
   renderElementHP: function(element) {
     if(element.HP && element.maxHP)
     {
-      var offsetX    = GameView.WINDOW_WIDTH - this.PANEL_WIDTH - this.PANEL_PADDING
+      var offsetX    = this.OFFSET_X
       var offsetY    = this.panelHeight
       var width      = this.PANEL_WIDTH
       var height     = this.TEXT_HEIGHT / 2
@@ -95,13 +105,13 @@ var GameViewUI = {
   },
   renderElementMP: function(element) {
     if(element.turret) {
-      target = element.turret
+      var target = element.turret
     } else {
-      target = element
+      var target = element
     }
 
-    if(target.fireRate && target.firingCooldown) {
-      var offsetX       = GameView.WINDOW_WIDTH - this.PANEL_WIDTH - this.PANEL_PADDING
+    if(target.fireRate && (target.firingCooldown || target.firingCooldown == 0)) {
+      var offsetX       = this.OFFSET_X
       var offsetY       = this.panelHeight
       var width         = this.PANEL_WIDTH
       var height        = this.TEXT_HEIGHT / 2
@@ -124,12 +134,18 @@ var GameViewUI = {
       Canvas.closePath();
     }
   },
-
-
+  renderElementTurretUpgradeOptions: function(element) {
+    if(element.canPlaceTurret && element.canPlaceTurret()) {
+      new GameViewUIButton('Buy Turret', function() { this.purchaseTurret() }.bind(element))
+    }
+  },
   color: function(colorString)
   {
-    transparency = this.hovering ? '0.3' : '0.9'
-
+    var transparency = this.ghostMenu() ? '0.3' : '0.9'
     return 'rgba(' + colorString + ', ' + transparency + ')'
+  },
+  ghostMenu:function(){
+    return false; //this.hovering;
   }
+
 }

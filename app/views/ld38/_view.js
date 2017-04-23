@@ -16,6 +16,8 @@ var GameView = {
     this.worldTransform = new Transform()
     this.uiTransform    = new Transform()
 
+    GameViewUI.init();
+
     CanvasElement = document.getElementById('game');
     //window.addEventListener("keydown",GameKeyListener.keyDown,true);
     //window.addEventListener("keyup",GameKeyListener.keyUp,true);

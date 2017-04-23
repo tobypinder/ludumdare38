@@ -55,26 +55,26 @@ GameModelBounds = {
   {
     if(GameControllerMouse.unhandledWheelDown)
     {
-
-      var newZoom = Math.floor((GameModelWorld.zoom * 1.025) * 100) / 100 + 0.01
-      //var newZoom = GameModelWorld.zoom + 0.03
-      if(newZoom > GameModelWorld.MAX_ZOOM) {
-        newZoom = GameModelWorld.MAX_ZOOM
+      var newZoom = Math.floor((GameModelWorld.zoom / 1.025) * 100) / 100 - 0.01
+      if(newZoom < GameModelWorld.MIN_ZOOM) {
+        newZoom = GameModelWorld.MIN_ZOOM
       }
-      GameModelWorld.zoom = newZoom
+      GameModelWorld.teleportAwayFromMouse();
+      GameModelWorld.changeZoom(newZoom);
       GameControllerMouse.unhandledWheelDown = false
+      GameControllerMouse.updateMouseWorldPosition();
     }
 
     if(GameControllerMouse.unhandledWheelUp)
     {
-
-      var newZoom = Math.floor((GameModelWorld.zoom / 1.025) * 100) / 100 - 0.01
-      //var newZoom = GameModelWorld.zoom - 0.03
-      if(newZoom < GameModelWorld.MIN_ZOOM) {
-        newZoom = GameModelWorld.MIN_ZOOM
+      var newZoom = Math.floor((GameModelWorld.zoom * 1.025) * 100) / 100 + 0.01
+      if(newZoom > GameModelWorld.MAX_ZOOM) {
+        newZoom = GameModelWorld.MAX_ZOOM
       }
-      GameModelWorld.zoom = newZoom
+      GameModelWorld.teleportTowardsMouse();
+      GameModelWorld.changeZoom(newZoom);
       GameControllerMouse.unhandledWheelUp = false
+      GameControllerMouse.updateMouseWorldPosition();
     }
   }
 }

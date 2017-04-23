@@ -16,7 +16,12 @@ var GameModelMoonSegment = function(moon, index)
   }
 
   this.canPlaceTurret = function() {
-    return !turret
+    return !(this.turret)
+  }
+
+  this.purchaseTurret = function() {
+    console.log('You bought a turret!')
+    this.turret = new GameModelTurret(this);
   }
 
   this.isSelected = function() {

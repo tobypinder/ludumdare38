@@ -36,6 +36,7 @@ var GameModelPlanetSegment = function(planet, index)
     console.log("Planet Segment killed! - Game Over? ")
     this.HP = 0
     this.destroyed = true;
+    GameControllerMouse.deselectEntity(this);
   }
 
   this.sizeOffset = function()

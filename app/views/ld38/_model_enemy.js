@@ -65,8 +65,8 @@ GameModelEnemy = function() {
   }
 
   this.kill = function() {
-    console.log("Enemy killed!")
     this.destroyed = true;
+    GameControllerMouse.deselectEntity(this);
   }
 
   this.cooldowns = function(ms) {

@@ -14,7 +14,7 @@ var GameModelWorld = {
     this.enemies = [],
     this.bullets = [],
 
-    this.offsetX = -200,
+    this.offsetX = 0,
     this.offsetY = 0,
     this.zoom    = 0.5
 
@@ -62,5 +62,28 @@ var GameModelWorld = {
 
   renderPlanetSegment: function(index, segment) {
     GameViewPlanetSegment.render(segment)
+  },
+  teleportTowardsMouse: function(){
+    this.teleportRelativeToMouse(-1);
+  },
+  teleportAwayFromMouse: function(){
+    this.teleportRelativeToMouse(1);
+  },
+  teleportRelativeToMouse: function(direction){
+    if(GameControllerMouse.mouseX && GameControllerMouse.mouseY) {
+      var zoomAmount = Math.sqrt(GameModelWorld.zoom) * 10
+
+      var deltaX = (GameControllerMouse.mouseX - (GameView.WINDOW_WIDTH / 2))
+      var deltaY = (GameControllerMouse.mouseY - (GameView.WINDOW_HEIGHT / 2))
+
+      this.offsetX += (deltaX / zoomAmount) * direction;
+      this.offsetY += (deltaY / zoomAmount) * direction;
+    }
+  },
+  changeZoom: function(newZoom) {
+    var oldZoom  = this.zoom;
+    this.zoom    = newZoom;
+    this.offsetX = this.offsetX * (newZoom/oldZoom);
+    this.offsetY = this.offsetY * (newZoom/oldZoom);
   }
 }

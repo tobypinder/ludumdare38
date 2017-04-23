@@ -82,6 +82,7 @@ GameModelBullet = function(source, target, validTargets) {
 
   this.kill = function() {
     this.destroyed = true
+    GameControllerMouse.deselectEntity(this);
   }
 
   this.rotateTowardsTarget = function(ms) {
