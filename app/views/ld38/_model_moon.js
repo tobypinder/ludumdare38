@@ -16,11 +16,9 @@ var GameModelMoon = function()
     this.segmentCount      = 12
     this.segments          = []
 
-
-
     // Vary constants.
-    this.radius *= (1 + (0.1 * (Math.random() - 0.5)))
-    this.orbitTime *= (1 + (0.2 * (Math.random() - 0.5)))
+    this.radius       *= (1 + (0.1 * (Math.random() - 0.5)))
+    this.orbitTime    *= (1 + (0.2 * (Math.random() - 0.5)))
     //this.orbitDirection = Math.random() > 0.5 ? 1 : -1
     this.rotationTime *= (1 + (0.3 * (Math.random() - 0.5)))
     this.radius       *= (1 + (0.1 * (Math.random() - 0.5)))

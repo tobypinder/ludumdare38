@@ -18,12 +18,12 @@ var GameModelPlanet = {
     this.rotationTime      = 30 * Util.Time.SECONDS
     this.rotationDirection = 1
 
-    this.addMoon(200);
-    this.addMoon(300);
     this.addMoon(400);
     this.addMoon(500);
     this.addMoon(600);
+    this.addMoon(700);
     this.addMoon(800);
+    this.addMoon(900);
     this.addMoon(1000);
 
     for(var i=0; i<this.segmentCount; i++)

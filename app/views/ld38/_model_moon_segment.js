@@ -6,26 +6,21 @@ var GameModelMoonSegment = function(moon, index)
   this.mouseDown  = false;
   this.maxOffset  = 0;
 
-  this.isSelected = function()
-  {
+  this.isSelected = function() {
     GameControllerMouse.unhandledMouseDown = false
     this.mouseDown = true;
     GameControllerMouse.selectEntity(this);
   },
-  this.isFocused = function()
-  {
+  this.isFocused = function() {
     this.mouseHover = true;
-  },
-  this.isUnfocused = function()
-  {
+  }
+  this.isUnfocused = function() {
     this.mouseHover = false;
-  },
-  this.sizeOffset = function()
-  {
+  }
+  this.sizeOffset = function() {
     return (this.moon.radius + this.maxOffset);
   }
-  this.maxSizeOffset = function()
-  {
+  this.maxSizeOffset = function() {
     return (this.moon.radius + this.maxOffset);
   }
   this.radialOffset = function() {

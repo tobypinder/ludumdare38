@@ -39,10 +39,18 @@ var GameView = {
   frameRenderWorld: function()
   {
     GameViewPlanet.frame();
+    $.each(GameModelWorld.enemies, this.frameRenderEnemy.bind(this))
+    $.each(GameModelWorld.bullets, this.frameRenderBullet.bind(this))
   },
   frameRenderUI: function()
   {
     // TODO
+  },
+  frameRenderEnemy:function(index, enemy) {
+    GameViewEnemy.render(enemy);
+  },
+  frameRenderBullet:function(index, bullet) {
+    GameViewBullet.render(bullet);
   },
   frameRenderDebug:function()
   {
