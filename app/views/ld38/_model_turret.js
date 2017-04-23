@@ -11,8 +11,8 @@ var GameModelTurret = function(segment)
 
   this.fireRate       = 1000 + (400 * Math.random()); //ms
   this.firingCooldown = Math.random() * 500;
-
-  this.bulletSpeed = 60;
+  this.name           = 'Plain Turret'
+  this.bulletSpeed    = 60;
 
   this.frame = function()
   {
@@ -30,7 +30,7 @@ var GameModelTurret = function(segment)
   }
 
   this.cooldowns = function(ms) {
-    this.firingCooldown -= ms
+    this.firingCooldown = Math.max(this.firingCooldown - ms, 0)
   }
 
   this.attemptToFire = function() {
@@ -44,7 +44,7 @@ var GameModelTurret = function(segment)
     // target is a random Enemy
     // TODO: Vision cones etc
 
-    GameModelWorld.addBullet(this, target);
+    GameModelWorld.addBullet(this, target, GameModelWorld.enemies);
     this.firingCooldown = this.fireRate;
   }
 

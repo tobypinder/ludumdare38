@@ -1,7 +1,7 @@
-GameModelBullet = function(source, target) {
-
+GameModelBullet = function(source, target, validTargets) {
   this.source               = source
   this.target               = target
+  this.validTargets         = validTargets
   this.duration             = 1000
   this.damage               = source.damage
   this.positionX            = source.positionX;
@@ -15,6 +15,11 @@ GameModelBullet = function(source, target) {
   this.mouseHover = false;
   this.mouseDown  = false;
   this.destroyed  = false;
+
+  this.name = "Bullet"
+
+  this.HP  = 20
+  this.maxHP = this.HP
 
   this.isSelected = function() {
     GameControllerMouse.unhandledMouseDown = false
@@ -31,19 +36,22 @@ GameModelBullet = function(source, target) {
   this.frame = function() {
     var ms = GameModel.stats.frameTime
 
+    this.advance(ms);
     if(!this.target || this.target.destroyed) {
       this.target = null
-      this.advance(ms);
     } else {
       this.rotateTowardsTarget(ms);
-      this.advance(ms);
-      this.checkForCollision()
     }
 
+    this.checkForCollision()
     this.decay(ms);
   };
 
   this.decay = function(ms) {
+    this.HP = this.HP - (ms / 1000)
+    if(this.HP <= 0) {
+      this.kill();
+    }
     // TODO: Reduce health
   }
 
@@ -54,12 +62,23 @@ GameModelBullet = function(source, target) {
   };
 
   this.checkForCollision = function() {
-    if(!this.destroyed && target.containsPoint(this.positionX, this.positionY))
+    if(!this.destroyed)
     {
-      this.target.shotBy(this)
+      this.checkCollisionWith(this.target)
+      if(this.validTargets) {
+        for(var i=0; i<this.validTargets.length; i++) {
+          this.checkCollisionWith(this.validTargets[i]);
+        }
+      }
+    }
+  };
+
+  this.checkCollisionWith = function(target) {
+    if(target && target.containsPoint(this.positionX, this.positionY)) {
+      target.shotBy(this)
       this.kill();
     }
-  }
+  };
 
   this.kill = function() {
     this.destroyed = true

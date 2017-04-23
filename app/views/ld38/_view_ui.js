@@ -25,6 +25,7 @@ var GameViewUI = {
 
 
     this.renderElementName(element);
+    this.renderElementTurretName(element);
     this.renderElementHP(element);
     this.renderElementMP(element);
     this.renderElementPanelBorder(element);
@@ -47,6 +48,23 @@ var GameViewUI = {
     Canvas.fillStyle = this.color(this.COLOR_WHITE)
     Canvas.textAlign = 'right'
     Canvas.fillText(element.name, GameView.WINDOW_WIDTH - this.PANEL_PADDING - this.TEXT_PADDING, this.panelHeight);
+  },
+  renderElementTurretName: function(element) {
+    var name = null
+    if(element.turret){
+      name = element.turret.name;
+    } else if (element.canPlaceTurret) {
+      name = 'No Turret';
+    }
+
+    if(name)
+    {
+      this.panelHeight +=  this.TEXT_HEIGHT
+      Canvas.strokeStyle = this.color(this.COLOR_WHITE)
+      Canvas.fillStyle = this.color(this.COLOR_WHITE)
+      Canvas.textAlign = 'right'
+      Canvas.fillText(name, GameView.WINDOW_WIDTH - this.PANEL_PADDING - this.TEXT_PADDING, this.panelHeight);
+    }
   },
   renderElementHP: function(element) {
     if(element.HP && element.maxHP)

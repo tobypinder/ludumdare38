@@ -15,6 +15,10 @@ var GameModelMoonSegment = function(moon, index)
     this.turret = new GameModelTurret(this); // TODO: User must place these!
   }
 
+  this.canPlaceTurret = function() {
+    return !turret
+  }
+
   this.isSelected = function() {
     GameControllerMouse.unhandledMouseDown = false
     this.mouseDown = true;

@@ -3,7 +3,8 @@ var GameViewMoonSegment = {
     MOUSE_DOWN:  '#ff33ff',
     MOUSE_HOVER: '#ffff66',
     SELECTED:    '#7777ff',
-    STANDARD:    '#66ff66'
+    STANDARD:    '#66ff66',
+    TURRETED:    'rgba(0, 0, 0, 0.5)'
   },
 
   frame: function() {
@@ -13,7 +14,12 @@ var GameViewMoonSegment = {
     this.renderMainSegment(segment);
     this.checkHover(segment);
     this.checkMouseDown(segment);
+    this.colorMainSegment(segment);
 
+    this.renderTurretSegment(segment);
+  },
+
+  colorMainSegment(segment) {
     if(segment.mouseDown) {
       Canvas.strokeStyle = this.colors.MOUSE_DOWN
       Canvas.fillStyle   = this.colors.MOUSE_DOWN
@@ -30,7 +36,7 @@ var GameViewMoonSegment = {
     Canvas.fill();
   },
 
-  renderMainSegment(segment) {
+  renderMainSegment: function(segment) {
     GameView.renderModeWorld();
     Canvas.moveTo(segment.moon.positionX, segment.moon.positionY)
     Canvas.beginPath();
@@ -42,6 +48,23 @@ var GameViewMoonSegment = {
       segment.moon.rotation + segment.radialOffset() + segment.radialSize());
     Canvas.lineTo(segment.moon.positionX, segment.moon.positionY)
     Canvas.closePath();
+  },
+  renderTurretSegment: function(segment) {
+    if(segment.turret) {
+      GameView.renderModeWorld();
+      Canvas.moveTo(segment.moon.positionX, segment.moon.positionY)
+      Canvas.beginPath();
+      Canvas.arc(
+        segment.moon.positionX,
+        segment.moon.positionY,
+        segment.sizeOffset(),
+        segment.moon.rotation + segment.radialOffset(),
+        segment.moon.rotation + segment.radialOffset() + segment.radialSize());
+      Canvas.lineTo(segment.moon.positionX, segment.moon.positionY)
+      Canvas.closePath();
+      Canvas.fillStyle = this.colors.TURRETED;
+      Canvas.fill();
+    }
   },
 
   checkHover: function(segment)

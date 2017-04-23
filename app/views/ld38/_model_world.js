@@ -11,7 +11,7 @@ var GameModelWorld = {
 
   init: function()
   {
-    this.enemies =[],
+    this.enemies = [],
     this.bullets = [],
 
     this.offsetX = -200,
@@ -55,8 +55,8 @@ var GameModelWorld = {
     var enemy = new GameModelEnemy(this);
     this.enemies.push(enemy);
   },
-  addBullet: function(source, target) {
-    var bullet = new GameModelBullet(source, target)
+  addBullet: function(source, target, validTargets) {
+    var bullet = new GameModelBullet(source, target, validTargets)
     this.bullets.push(bullet)
   },
 

@@ -10,12 +10,24 @@ var GameViewPlanetSegment = {
   frame: function() {
   },
   render: function(segment) {
-
+    GameView.renderModeWorld();
     this.renderDamageSegment(segment);
     this.checkHover(segment);
     this.checkMouseDown(segment);
     this.renderMainSegment(segment);
+  },
 
+  renderMainSegment(segment) {
+    Canvas.beginPath();
+    Canvas.moveTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
+    Canvas.arc(
+      segment.planet.positionX,
+      segment.planet.positionY,
+      segment.sizeOffset(),
+      segment.planet.rotation + segment.radialOffset(),
+      segment.planet.rotation + segment.radialOffset() + segment.radialSize());
+    Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
+    Canvas.closePath();
 
     if(segment.mouseDown) {
       Canvas.strokeStyle = this.colors.MOUSE_DOWN
@@ -32,24 +44,7 @@ var GameViewPlanetSegment = {
     }
     Canvas.fill();
   },
-
-  renderMainSegment(segment) {
-    GameView.renderModeWorld();
-    Canvas.beginPath();
-    Canvas.moveTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
-    Canvas.arc(
-      segment.planet.positionX,
-      segment.planet.positionY,
-      segment.sizeOffset(),
-      segment.planet.rotation + segment.radialOffset(),
-      segment.planet.rotation + segment.radialOffset() + segment.radialSize());
-    Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
-    Canvas.closePath();
-
-
-  },
   renderDamageSegment(segment) {
-    GameView.renderModeWorld();
     Canvas.beginPath();
     Canvas.moveTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.arc(
