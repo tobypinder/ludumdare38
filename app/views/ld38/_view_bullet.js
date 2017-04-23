@@ -3,7 +3,8 @@ var GameViewBullet = {
     MOUSE_DOWN:  '#ff33ff',
     MOUSE_HOVER: '#ffff66',
     SELECTED:    '#7777ff',
-    STANDARD:    '#ffffff'
+    STANDARD:    '#ffffff',
+    HIT:         '#ff0000'
   },
 
   render: function(bullet) {
@@ -11,7 +12,10 @@ var GameViewBullet = {
     this.checkHover(bullet);
     this.checkMouseDown(bullet);
 
-    if(bullet.mouseDown) {
+    if(bullet.destroyed) {
+      Canvas.strokeStyle = this.colors.HIT
+      Canvas.fillStyle   = this.colors.HIT
+    }else if(bullet.mouseDown) {
       Canvas.strokeStyle = this.colors.MOUSE_DOWN
       Canvas.fillStyle   = this.colors.MOUSE_DOWN
     } else if(bullet.mouseHover) {
@@ -39,10 +43,6 @@ var GameViewBullet = {
       Util.Angle.FULL_PLANET);
     Canvas.lineTo(bullet.positionX, bullet.positionY)
     Canvas.closePath();
-
-    //Canvas.strokeStyle = this.colors.STANDARD;
-    //Canvas.fillStyle   = this.colors.STANDARD;
-    //Canvas.fill();
   },
   checkHover: function(bullet)
   {

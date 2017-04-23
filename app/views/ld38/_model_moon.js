@@ -15,6 +15,7 @@ var GameModelMoon = function()
     this.rotationDirection = 1 //or -1
     this.segmentCount      = 12
     this.segments          = []
+    this.name              = Util.Generator.moon();
 
     // Vary constants.
     this.radius       *= (1 + (0.1 * (Math.random() - 0.5)))
@@ -37,7 +38,6 @@ var GameModelMoon = function()
     var segment = new GameModelMoonSegment(this, index);
     this.segments.push(segment);
   },
-
 
   this.frame = function()
   {

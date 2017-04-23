@@ -8,6 +8,7 @@ var GameModelPlanet = {
   segmentCount:      12,
   moons:             [],
   segments:          [],
+  name:              '',
 
   init: function()
   {
@@ -17,7 +18,12 @@ var GameModelPlanet = {
     this.rotation          = 0
     this.rotationTime      = 30 * Util.Time.SECONDS
     this.rotationDirection = 1
+    this.segmentCount      = 12,
+    this.moons             = [],
+    this.segments          = [],
+    this.name              = Util.Generator.planet();
 
+    // TODO: n moons in shell at each level - think nuclai.
     this.addMoon(400);
     this.addMoon(500);
     this.addMoon(600);
@@ -31,7 +37,28 @@ var GameModelPlanet = {
       this.addPlanetSegment(i);
     }
   },
+  containsPoint: function(x, y)
+  {
+    var a2 = Math.pow(x - this.positionX, 2)
+    var b2 = Math.pow(y - this.positionY, 2)
+    var c2 = Math.pow(this.radius, 2)
 
+    return a2 + b2 < c2
+  },
+  shotBy: function(bullet) {
+    //detect segment
+    var x     = bullet.positionX - this.positionX
+    var y     = bullet.positionY - this.positionY
+    var angle = Math.atan2(y, x)
+    var segmentAngle = angle - this.rotation
+    if(segmentAngle < 0)
+    {
+      segmentAngle += Util.Angle.FULL_PLANET
+    }
+    var perSegment   = Util.Angle.FULL_PLANET / this.segmentCount
+    var segmentIndex = Math.floor(segmentAngle / perSegment % this.segmentCount)
+    this.segments[segmentIndex].HP -= bullet.damage;
+  },
   addMoon: function(distance)
   {
     var moon = new GameModelMoon();

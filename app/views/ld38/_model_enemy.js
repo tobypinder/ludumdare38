@@ -2,22 +2,21 @@ GameModelEnemy = function() {
   this.HP    = 100;
   this.maxHP = 100;
 
-  this.damage             = 10;
+  this.damage             = 100;
   this.positionX          = null;
   this.positionY          = null;
   this.radius             = 10;
   this.rotation           = (Math.random() * Util.Angle.FULL_PLANET) - Util.Angle.HALF_PLANET;
   this.rotationTime       = ((Math.random() * 10) + 20) * Util.Time.SECONDS;
   this.rotationDirection  = -1;
-  this.baseDistanceRadius = 1000;
+  this.baseDistanceRadius = 1000 + 200 * Math.random();
   this.distanceRadius     = 1000;
   this.MINIMUM_RADIUS     = 100; //100
 
-  this.fireRate       = 1200; //ms
-  this.firingCooldown = 0;
+  this.fireRate       = 1000 + (400 * Math.random()); //ms
+  this.firingCooldown = Math.random() * 500;
 
-  this.baseSpeed = 200;
-
+  this.baseSpeed  = 200;
   this.mouseHover = false;
   this.mouseDown  = false;
 

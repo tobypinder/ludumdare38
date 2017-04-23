@@ -20,7 +20,7 @@ var GameView = {
     //window.addEventListener("keydown",GameKeyListener.keyDown,true);
     //window.addEventListener("keyup",GameKeyListener.keyUp,true);
     Canvas = CanvasElement.getContext('2d');
-    Canvas.font="20px electrolizeregular";
+    Canvas.font=Util.Font.Standard;
     requestAnimationFrame(GameView.frame.bind(this));
   },
   frame:function()
@@ -45,6 +45,7 @@ var GameView = {
   frameRenderUI: function()
   {
     // TODO
+    GameViewUI.frame();
   },
   frameRenderEnemy:function(index, enemy) {
     GameViewEnemy.render(enemy);

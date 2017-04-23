@@ -5,6 +5,7 @@ var GameModelMoonSegment = function(moon, index)
   this.mouseHover = false;
   this.mouseDown  = false;
   this.maxOffset  = 0;
+  this.name       = this.moon.name + ": Sector " + Util.Generator.Greek[index]
 
   this.isSelected = function() {
     GameControllerMouse.unhandledMouseDown = false

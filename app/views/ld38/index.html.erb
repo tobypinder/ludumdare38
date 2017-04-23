@@ -51,10 +51,11 @@
   <%= render 'view_mouse.js' %>
   <%= render 'view_planet.js' %>
   <%= render 'view_planet_segment.js' %>
+  <%= render 'view_ui.js' %>
 
   <%= render '_vendor_transform.js' %>
 
   $(function(){
-    GameState.start({});
+    GameState.start();
   });
 </script>

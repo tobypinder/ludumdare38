@@ -8,6 +8,7 @@ var GameModelPlanetSegment = function(planet, index)
 
   this.HP    = Math.random() * 250 + 750
   this.maxHP = 1000
+  this.name  = this.planet.name + ": Sector " + Util.Generator.Greek[index]
 
   this.isSelected = function()
   {
@@ -25,7 +26,8 @@ var GameModelPlanetSegment = function(planet, index)
   },
   this.sizeOffset = function()
   {
-    return (this.planet.radius + this.maxOffset) * (this.HP / this.maxHP);
+    hp = Math.max(0, (this.HP / this.maxHP))
+    return (this.planet.radius + this.maxOffset) * hp;
   }
   this.maxSizeOffset = function()
   {

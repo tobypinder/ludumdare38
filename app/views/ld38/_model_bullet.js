@@ -14,6 +14,7 @@ GameModelBullet = function(source, target) {
 
   this.mouseHover = false;
   this.mouseDown  = false;
+  this.destroyed  = false;
 
   this.isSelected = function() {
     GameControllerMouse.unhandledMouseDown = false
@@ -31,6 +32,7 @@ GameModelBullet = function(source, target) {
     var ms = GameModel.stats.frameTime
     this.advanceTowardsTarget(ms);
     this.rotateTowardsTarget(ms);
+    this.checkForCollision()
     this.decay(ms);
   };
 
@@ -43,6 +45,14 @@ GameModelBullet = function(source, target) {
     this.positionX -= ((Math.cos(this.rotation) - Math.sin(this.rotation)) * speed);
     this.positionY -= ((Math.sin(this.rotation) + Math.cos(this.rotation)) * speed);
   };
+
+  this.checkForCollision = function() {
+    if(!this.destroyed && target.containsPoint(this.positionX, this.positionY))
+    {
+      this.target.shotBy(this)
+      this.destroyed = true
+    }
+  }
 
   this.rotateTowardsTarget = function(ms) {
     var deltaX  = this.positionX - this.target.positionX

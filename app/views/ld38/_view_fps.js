@@ -2,6 +2,7 @@ var GameViewFPS = {
   frame: function()
   {
     GameView.renderModeUI()
+    Canvas.font=Util.Font.Regular;
 
     Canvas.strokeStyle = '#ffffff'
     Canvas.fillStyle = '#ffffff'
