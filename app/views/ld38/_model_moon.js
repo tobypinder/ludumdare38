@@ -44,6 +44,11 @@ var GameModelMoon = function()
     var ms = GameModel.stats.frameTime
     this.rotate(ms);
     this.orbit(ms)
+
+    for(var i=0; i<this.segmentCount; i++)
+    {
+      this.segments[i].frame(ms);
+    }
   }
 
   this.orbit = function(ms)

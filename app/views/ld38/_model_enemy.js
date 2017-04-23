@@ -37,6 +37,7 @@ GameModelEnemy = function() {
     this.cooldowns(ms);
     this.rotateAroundPlanet(ms);
     this.advanceTowardsPlanet(ms);
+    this.attemptToFire(ms);
   };
 
   this.cooldowns = function(ms) {
@@ -48,7 +49,6 @@ GameModelEnemy = function() {
     if(this.distanceRadius < this.MINIMUM_RADIUS)
     {
       this.distanceRadius = this.MINIMUM_RADIUS;
-      this.attemptToFire(ms);
     };
     this.positionX = (Math.cos(this.rotation) - Math.sin(this.rotation)) * this.distanceRadius
     this.positionY = (Math.sin(this.rotation) + Math.cos(this.rotation)) * this.distanceRadius
@@ -69,18 +69,21 @@ GameModelEnemy = function() {
   }
 
   this.attemptToFire = function() {
-    if(this.firingCooldown <= 0) {
+    if(this.firingCooldown <= 0 && this.distanceRadius <= this.MINIMUM_RADIUS) {
       this.fire();
-      this.firingCooldown = this.fireRate;
     }
   }
 
   this.fire = function() {
     // target is always the world
-    GameModelWorld.addBullet(this, GameModelPlanet); //
+    GameModelWorld.addBullet(this, GameModelPlanet);
+    this.firingCooldown = this.fireRate;
   }
 
   this.speed = function() {
     return ((this.distanceRadius / this.baseDistanceRadius) * this.baseSpeed)
+  }
+  this.ejectionSpeed = function() {
+    return this.speed() + 2;
   }
 }

@@ -10,7 +10,7 @@ GameModelBullet = function(source, target) {
   this.rotation             = source.rotation;   //Math.atan2((target.positionY - source.positionY), (target.positionX - source.positionX))
   // -0.25 * Math.PI +
   this.rotationSpeed        = 1000
-  this.baseSpeed            = this.source.speed();
+  this.baseSpeed            = this.source.ejectionSpeed();
 
   this.mouseHover = false;
   this.mouseDown  = false;
