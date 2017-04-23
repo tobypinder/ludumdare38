@@ -1,21 +1,26 @@
 var GameViewMoonSegment = {
   colors: {
-    MOUSE_DOWN:  '#ff33ff',
-    MOUSE_HOVER: '#ffff66',
-    SELECTED:    '#7777ff',
-    STANDARD:    '#66ff66',
-    TURRETED:    'rgba(0, 0, 0, 0.5)'
+    MOUSE_DOWN:               '#ff33ff',
+    MOUSE_HOVER:              '#ffff66',
+    SELECTED:                 '#7777ff',
+    STANDARD:                 '#66ff66',
+    TURRETED:                 'rgba(0, 0, 0, 0.5)',
+    VIEWCONE:                 'rgba(255, 255, 255, 0.1)',
+    VIEWCONE_BORDER:          'rgba(255, 255, 255, 0.3)',
+    SELECTED_VIEWCONE:        'rgba(119, 119, 255, 0.3)',
+    SELECTED_VIEWCONE_BORDER: 'rgba(119, 119, 255, 1)',
+    DETECTED_VIEWCONE:        'rgba(255, 255, 102, 0.3)',
+    DETECTED_VIEWCONE_BORDER: 'rgba(255, 255, 102, 1)'
   },
 
   frame: function() {
   },
   render: function(segment) {
-
+    this.renderTurretViewCone(segment);
     this.renderMainSegment(segment);
     this.checkHover(segment);
     this.checkMouseDown(segment);
     this.colorMainSegment(segment);
-
     this.renderTurretSegment(segment);
   },
 
@@ -44,26 +49,66 @@ var GameViewMoonSegment = {
       segment.moon.positionX,
       segment.moon.positionY,
       segment.sizeOffset(),
-      segment.moon.rotation + segment.radialOffset(),
-      segment.moon.rotation + segment.radialOffset() + segment.radialSize());
+      segment.segmentStartAngle(),
+      segment.segmentEndAngle())
     Canvas.lineTo(segment.moon.positionX, segment.moon.positionY)
     Canvas.closePath();
   },
   renderTurretSegment: function(segment) {
     if(segment.turret) {
-      GameView.renderModeWorld();
       Canvas.moveTo(segment.moon.positionX, segment.moon.positionY)
       Canvas.beginPath();
       Canvas.arc(
         segment.moon.positionX,
         segment.moon.positionY,
         segment.sizeOffset(),
-        segment.moon.rotation + segment.radialOffset(),
-        segment.moon.rotation + segment.radialOffset() + segment.radialSize());
+        segment.segmentStartAngle(),
+        segment.segmentEndAngle())
       Canvas.lineTo(segment.moon.positionX, segment.moon.positionY)
       Canvas.closePath();
       Canvas.fillStyle = this.colors.TURRETED;
       Canvas.fill();
+    }
+  },
+  renderTurretViewCone: function(segment) {
+    //
+    var selected  = (segment == GameControllerMouse.selectedEntity)
+    var show      = GameState.showAllViewCones || selected
+
+
+    if(segment.turret) {
+      var turret    = segment.turret;
+      var targeting = turret.validTargets.length > 0
+      Canvas.moveTo(segment.moon.positionX, segment.moon.positionY)
+      Canvas.beginPath();
+      Canvas.arc(
+        segment.positionX,
+        segment.positionY,
+        turret.viewConeSize(),
+        turret.viewConeStartAngle(),
+        turret.viewConeEndAngle())
+      Canvas.lineTo(segment.moon.positionX, segment.moon.positionY)
+
+      Canvas.lineWidth = 8;
+
+      if(selected) {
+        Canvas.fillStyle = this.colors.SELECTED_VIEWCONE;
+        Canvas.strokeStyle = this.colors.SELECTED_VIEWCONE_BORDER;
+      } else if(show && targeting) {
+        Canvas.fillStyle = this.colors.DETECTED_VIEWCONE;
+        Canvas.strokeStyle = this.colors.DETECTED_VIEWCONE_BORDER;
+      } else if(show) {
+        Canvas.fillStyle = this.colors.VIEWCONE;
+        Canvas.strokeStyle = this.colors.VIEWCONE_BORDER;
+      }
+
+
+      Canvas.closePath();
+
+      if(show) {
+        Canvas.stroke();
+        Canvas.fill();
+      }
     }
   },
 

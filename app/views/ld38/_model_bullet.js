@@ -6,7 +6,7 @@ GameModelBullet = function(source, target, validTargets) {
   this.damage               = source.damage
   this.positionX            = source.positionX;
   this.positionY            = source.positionY;
-  this.radius               = 5;
+  this.radius               = 3;
   this.rotation             = source.rotation;   //Math.atan2((target.positionY - source.positionY), (target.positionX - source.positionX))
   // -0.25 * Math.PI +
   this.rotationSpeed        = 1000

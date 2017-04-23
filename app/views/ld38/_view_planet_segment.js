@@ -24,8 +24,8 @@ var GameViewPlanetSegment = {
       segment.planet.positionX,
       segment.planet.positionY,
       segment.sizeOffset(),
-      segment.planet.rotation + segment.radialOffset(),
-      segment.planet.rotation + segment.radialOffset() + segment.radialSize());
+      segment.segmentStartAngle(),
+      segment.segmentEndAngle())
     Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.closePath();
 
@@ -51,8 +51,8 @@ var GameViewPlanetSegment = {
       segment.planet.positionX,
       segment.planet.positionY,
       segment.maxSizeOffset(),
-      segment.planet.rotation + segment.radialOffset(),
-      segment.planet.rotation + segment.radialOffset() + segment.radialSize());
+      segment.segmentStartAngle(),
+      segment.segmentEndAngle())
     Canvas.lineTo(GameModelPlanet.positionX, GameModelPlanet.positionY)
     Canvas.closePath();
 

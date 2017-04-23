@@ -7,18 +7,19 @@ GameModelEnemy = function() {
   this.positionY          = null;
   this.radius             = 10;
   this.rotation           = (Math.random() * Util.Angle.FULL_PLANET) - Util.Angle.HALF_PLANET;
-  this.rotationTime       = ((Math.random() * 10) + 20) * Util.Time.SECONDS;
+  this.rotationTime       = ((Math.random() * 30) + 150) * Util.Time.SECONDS;
   this.rotationDirection  = -1;
   this.baseDistanceRadius = 1000 + 200 * Math.random();
   this.distanceRadius     = 1000;
   this.MINIMUM_RADIUS     = 100; //100
   this.destroyed          = false;
   this.name               = 'Enemy' // TODO
+  this.shape              = 'box'
 
-  this.fireRate       = 1000 + (400 * Math.random()); //ms
+  this.fireRate       = 3000 + (400 * Math.random()); //ms
   this.firingCooldown = Math.random() * 500;
 
-  this.baseSpeed  = 200;
+  this.baseSpeed  = 20;
   this.mouseHover = false;
   this.mouseDown  = false;
 

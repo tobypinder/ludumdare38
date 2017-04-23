@@ -15,6 +15,7 @@ var GameViewUI = {
   {
     GameView.renderModeUI()
     Canvas.textBaseline = "bottom";
+    Canvas.lineWidth = 1;
     if(GameControllerMouse.selectedEntity && GameControllerMouse.selectedEntity.name) {
       this.renderElementPanel(GameControllerMouse.selectedEntity);
     }

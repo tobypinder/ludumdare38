@@ -5,7 +5,7 @@ var GameModelWorld = {
   MIN_ZOOM: 0.05,
   MAX_ZOOM: 2,
 
-  TEST_SPAWN: 100,
+  TEST_SPAWN: 1,
   enemies:  [],
   bullets:  [],
 

@@ -3,7 +3,35 @@ var GameViewEnemy = {
     MOUSE_DOWN:  '#ff33ff',
     MOUSE_HOVER: '#ffff66',
     SELECTED:    '#7777ff',
-    STANDARD:    '#dddddd'
+    STANDARD:    '#ffffff'
+  },
+  shapes: {
+    box: [
+      {
+        points: [
+          [-1, -1],
+          [-1,  1],
+          [1,   1],
+          [1,  -1]
+        ],
+        meta: {
+          lineWidth: 4,
+          rotationMultiplier: 8
+        },
+      },
+      {
+        points: [
+          [-0.4, -0.4],
+          [-0.4,  0.4],
+          [0.4,   0.4],
+          [0.4,  -0.4]
+        ],
+        meta: {
+          lineWidth: 2,
+          rotationMultiplier: 32
+        }
+      }
+    ]
   },
 
   render: function(enemy) {
@@ -24,25 +52,65 @@ var GameViewEnemy = {
       Canvas.strokeStyle = this.colors.STANDARD
       Canvas.fillStyle   = this.colors.STANDARD
     }
-    Canvas.fill();
+    Canvas.stroke();
   },
 
   renderEnemyBody(enemy) {
     GameView.renderModeWorld();
     Canvas.beginPath();
     Canvas.moveTo(enemy.positionX, enemy.positionY)
-    Canvas.arc(
-      enemy.positionX,
-      enemy.positionY,
-      enemy.radius,
-      0,
-      Util.Angle.FULL_PLANET);
-    Canvas.lineTo(enemy.positionX, enemy.positionY)
-    Canvas.closePath();
+
+
+    var shapes =  GameViewEnemy.shapes[enemy.shape]
+    for(var j=0; j<shapes.length; j++)
+    {
+      var plan   = shapes[j]
+      var meta   = plan.meta;
+      var points = plan.points;
+      var p = [];
+
+      Canvas.lineWidth = meta.lineWidth || 2
+      for(var i=0; i<points.length; i++) {
+        p.push(this.translatePoint(enemy, points[i], meta))
+      }
+
+      if(p.length > 0) {
+        Canvas.moveTo(p[p.length-1][0], p[p.length-1][1])
+        for(i=0; i<p.length; i++) {
+          Canvas.lineTo(p[i][0], p[i][1])
+        }
+      }
+
+      Canvas.closePath();
+    }
+    // Canvas.arc(
+    //   enemy.positionX,
+    //   enemy.positionY,
+    //   enemy.radius,
+    //   0,
+    //   Util.Angle.FULL_PLANET);
+    // Canvas.lineTo(enemy.positionX, enemy.positionY)
+    // Canvas.closePath();
 
     //Canvas.strokeStyle = this.colors.STANDARD;
     //Canvas.fillStyle   = this.colors.STANDARD;
     //Canvas.fill();
+  },
+  translatePoint: function(enemy, point, meta) {
+    if(!meta.rotationMultiplier) {
+      meta.rotationMultiplier = 1
+    }
+    var ex  = enemy.positionX
+    var ey  = enemy.positionY
+    var rad = enemy.radius
+    var rot = enemy.rotation * meta.rotationMultiplier
+    var tx  = point[0]
+    var ty  = point[1]
+
+    return [
+      ex + ((tx * Math.cos(rot) - ty * Math.sin(rot)) * rad),
+      ey + ((tx * Math.sin(rot) + ty * Math.cos(rot)) * rad)
+    ]
   },
   checkHover: function(enemy)
   {

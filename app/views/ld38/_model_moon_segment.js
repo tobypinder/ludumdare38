@@ -10,7 +10,7 @@ var GameModelMoonSegment = function(moon, index)
 
   this.positionRadiusMultiplier = 0.8
 
-  if(Math.random() < 0.5)
+  if(Math.random() < 0.05)
   {
     this.turret = new GameModelTurret(this); // TODO: User must place these!
   }
@@ -44,6 +44,9 @@ var GameModelMoonSegment = function(moon, index)
   this.radialSize = function(){
     return (Util.Angle.FULL_PLANET / this.moon.segmentCount)
   }
+  this.radialHalfSize = function(){
+    return this.radialSize() / 2
+  }
   this.frame = function(ms) {
     this.updatePosition();
     if(this.turret) {
@@ -59,6 +62,18 @@ var GameModelMoonSegment = function(moon, index)
     this.rotation   = this.moon.rotation + this.rotationOffset();
     this.positionX = this.moon.positionX + (Math.cos(this.rotation) - Math.sin(this.rotation)) * (this.moon.radius * this.positionRadiusMultiplier)
     this.positionY = this.moon.positionY + (Math.sin(this.rotation) + Math.cos(this.rotation)) * (this.moon.radius * this.positionRadiusMultiplier)
+  }
+
+  this.segmentStartAngle = function() {
+    return this.segmentMidpointAngle() - this.radialHalfSize()
+  }
+
+  this.segmentMidpointAngle = function() {
+    return this.moon.rotation + this.radialOffset()
+  }
+
+  this.segmentEndAngle = function() {
+    return this.segmentMidpointAngle() + this.radialHalfSize()
   }
 
   // Init

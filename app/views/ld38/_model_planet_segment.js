@@ -34,6 +34,7 @@ var GameModelPlanetSegment = function(planet, index)
 
   this.kill = function() {
     console.log("Planet Segment killed! - Game Over? ")
+    this.HP = 0
     this.destroyed = true;
   }
 
@@ -54,8 +55,23 @@ var GameModelPlanetSegment = function(planet, index)
   this.radialSize = function(){
     return (Util.Angle.FULL_PLANET / this.planet.segmentCount)
   }
+  this.radialHalfSize = function(){
+    return this.radialSize() / 2
+  }
   this.frame = function(ms)
   {
     //
+  }
+
+  this.segmentStartAngle = function() {
+    return this.segmentMidpointAngle() - this.radialHalfSize()
+  }
+
+  this.segmentMidpointAngle = function() {
+    return this.planet.rotation + this.radialOffset()
+  }
+
+  this.segmentEndAngle = function() {
+    return this.segmentMidpointAngle() + this.radialHalfSize()
   }
 }
