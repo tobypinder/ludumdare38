@@ -57,7 +57,7 @@ var GameModelPlanet = {
     }
     var perSegment   = Util.Angle.FULL_PLANET / this.segmentCount
     var segmentIndex = Math.floor(segmentAngle / perSegment % this.segmentCount)
-    this.segments[segmentIndex].HP -= bullet.damage;
+    this.segments[segmentIndex].applyDamage(bullet.damage);
   },
   addMoon: function(distance)
   {

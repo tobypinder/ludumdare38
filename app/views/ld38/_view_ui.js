@@ -7,6 +7,8 @@ var GameViewUI = {
   COLOR_WHITE: '255, 255, 255',
   COLOR_RED: '255, 0, 0',
   COLOR_GREEN: '0, 255, 0',
+  COLOR_BLUE: '0, 0, 255',
+  COLOR_CYAN: '0, 255, 255',
   hovering: false,
   panelHeight: 0,
   frame: function()
@@ -24,6 +26,7 @@ var GameViewUI = {
 
     this.renderElementName(element);
     this.renderElementHP(element);
+    this.renderElementMP(element);
     this.renderElementPanelBorder(element);
   },
   renderElementPanelBorder:function(element){
@@ -71,6 +74,39 @@ var GameViewUI = {
       Canvas.closePath();
     }
   },
+  renderElementMP: function(element) {
+    if(element.turret) {
+      target = element.turret
+    } else {
+      target = element
+    }
+
+    if(target.fireRate && target.firingCooldown) {
+      var offsetX       = GameView.WINDOW_WIDTH - this.PANEL_WIDTH - this.PANEL_PADDING
+      var offsetY       = this.panelHeight
+      var width         = this.PANEL_WIDTH
+      var height        = this.TEXT_HEIGHT / 2
+      var blueWidth     = width * (target.firingCooldown / target.fireRate)
+      var cyanWidth     = width - blueWidth
+      this.panelHeight += height
+
+      //blue
+      Canvas.fillStyle   = this.color(this.COLOR_BLUE)
+      Canvas.beginPath();
+      Canvas.rect(offsetX, offsetY, blueWidth, height);
+      Canvas.fill();
+      Canvas.closePath();
+
+      //cyan
+      Canvas.fillStyle   = this.color(this.COLOR_CYAN)
+      Canvas.beginPath();
+      Canvas.rect(offsetX + blueWidth, offsetY, cyanWidth, height);
+      Canvas.fill();
+      Canvas.closePath();
+    }
+  },
+
+
   color: function(colorString)
   {
     transparency = this.hovering ? '0.3' : '0.9'

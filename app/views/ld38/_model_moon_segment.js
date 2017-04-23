@@ -8,10 +8,12 @@ var GameModelMoonSegment = function(moon, index)
   this.name       = this.moon.name + ": Sector " + Util.Generator.Greek[index]
   this.turret     = null;
 
-  if(Math.random() < 0.1) {
-    this.turret = new GameModelTurret(this);
-  }
+  this.positionRadiusMultiplier = 0.8
 
+  if(Math.random() < 0.5)
+  {
+    this.turret = new GameModelTurret(this); // TODO: User must place these!
+  }
 
   this.isSelected = function() {
     GameControllerMouse.unhandledMouseDown = false
@@ -46,13 +48,13 @@ var GameModelMoonSegment = function(moon, index)
   }
 
   this.rotationOffset = function() {
-    return (Util.Angle.FULL_PLANET / this.moon.segmentCount) * (this.index + 0.5)
+    return (Util.Angle.FULL_PLANET / this.moon.segmentCount) * (this.index - 0.5)
   }
 
   this.updatePosition = function() {
     this.rotation   = this.moon.rotation + this.rotationOffset();
-    this.positionX  = this.moon.positionX; // TODO: From edge of segment - use index!
-    this.positionY  = this.moon.positionY; // TODO: From edge of segment - use index!
+    this.positionX = this.moon.positionX + (Math.cos(this.rotation) - Math.sin(this.rotation)) * (this.moon.radius * this.positionRadiusMultiplier)
+    this.positionY = this.moon.positionY + (Math.sin(this.rotation) + Math.cos(this.rotation)) * (this.moon.radius * this.positionRadiusMultiplier)
   }
 
   // Init

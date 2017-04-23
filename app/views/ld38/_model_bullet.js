@@ -30,9 +30,16 @@ GameModelBullet = function(source, target) {
 
   this.frame = function() {
     var ms = GameModel.stats.frameTime
-    this.advanceTowardsTarget(ms);
-    this.rotateTowardsTarget(ms);
-    this.checkForCollision()
+
+    if(!this.target || this.target.destroyed) {
+      this.target = null
+      this.advance(ms);
+    } else {
+      this.rotateTowardsTarget(ms);
+      this.advance(ms);
+      this.checkForCollision()
+    }
+
     this.decay(ms);
   };
 
@@ -40,7 +47,7 @@ GameModelBullet = function(source, target) {
     // TODO: Reduce health
   }
 
-  this.advanceTowardsTarget = function(ms) {
+  this.advance = function(ms) {
     var speed      = this.speed() * (ms / 1000);
     this.positionX -= ((Math.cos(this.rotation) - Math.sin(this.rotation)) * speed);
     this.positionY -= ((Math.sin(this.rotation) + Math.cos(this.rotation)) * speed);
@@ -50,8 +57,12 @@ GameModelBullet = function(source, target) {
     if(!this.destroyed && target.containsPoint(this.positionX, this.positionY))
     {
       this.target.shotBy(this)
-      this.destroyed = true
+      this.kill();
     }
+  }
+
+  this.kill = function() {
+    this.destroyed = true
   }
 
   this.rotateTowardsTarget = function(ms) {

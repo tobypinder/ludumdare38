@@ -24,6 +24,19 @@ var GameModelPlanetSegment = function(planet, index)
   {
     this.mouseHover = false;
   },
+  this.applyDamage = function(amount) {
+    this.HP -= amount;
+
+    if(this.HP <= 0) {
+      this.kill();
+    }
+  }
+
+  this.kill = function() {
+    console.log("Planet Segment killed! - Game Over? ")
+    this.destroyed = true;
+  }
+
   this.sizeOffset = function()
   {
     hp = Math.max(0, (this.HP / this.maxHP))

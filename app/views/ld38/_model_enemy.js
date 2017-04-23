@@ -12,6 +12,8 @@ GameModelEnemy = function() {
   this.baseDistanceRadius = 1000 + 200 * Math.random();
   this.distanceRadius     = 1000;
   this.MINIMUM_RADIUS     = 100; //100
+  this.destroyed          = false;
+  this.name               = 'Enemy' // TODO
 
   this.fireRate       = 1000 + (400 * Math.random()); //ms
   this.firingCooldown = Math.random() * 500;
@@ -40,8 +42,34 @@ GameModelEnemy = function() {
     this.attemptToFire(ms);
   };
 
+  this.containsPoint = function(x, y)
+  {
+    var a2 = Math.pow(x - this.positionX, 2)
+    var b2 = Math.pow(y - this.positionY, 2)
+    var c2 = Math.pow(this.radius, 2)
+
+    return a2 + b2 < c2
+  },
+
+  this.shotBy = function(bullet) {
+    this.applyDamage(bullet.damage)
+  };
+
+  this.applyDamage = function(amount) {
+    this.HP -= amount;
+
+    if(this.HP <= 0) {
+      this.kill();
+    }
+  }
+
+  this.kill = function() {
+    console.log("Enemy killed!")
+    this.destroyed = true;
+  }
+
   this.cooldowns = function(ms) {
-    this.firingCooldown -= ms
+    this.firingCooldown = Math.max(this.firingCooldown - ms, 0)
   }
 
   this.advanceTowardsPlanet = function(ms) {

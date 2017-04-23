@@ -6,12 +6,13 @@ var GameModelTurret = function(segment)
   this.positionY  = segment.positionY;
   this.rotation   = segment.rotation;
 
+  this.damage           = 100;
   this.visibilityRadius = 2000;
 
-  this.fireRate       = 3000 + (400 * Math.random()); //ms
+  this.fireRate       = 1000 + (400 * Math.random()); //ms
   this.firingCooldown = Math.random() * 500;
 
-  this.bulletSpeed = 30;
+  this.bulletSpeed = 60;
 
   this.frame = function()
   {
@@ -33,15 +34,17 @@ var GameModelTurret = function(segment)
   }
 
   this.attemptToFire = function() {
-    if(this.firingCooldown <= 0) { //  && this.distanceRadius <= this.MINIMUM_RADIUS
-      this.fire();
+    target = Util.Sample(GameModelWorld.enemies)
+    if(this.firingCooldown <= 0 && target) {
+      this.fire(target);
     }
   }
 
-  this.fire = function() {
-    console.log('Turret firing!');
-    // target is always the world
-    GameModelWorld.addBullet(this, GameModelPlanet);
+  this.fire = function(target) {
+    // target is a random Enemy
+    // TODO: Vision cones etc
+
+    GameModelWorld.addBullet(this, target);
     this.firingCooldown = this.fireRate;
   }
 

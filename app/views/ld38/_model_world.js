@@ -5,7 +5,7 @@ var GameModelWorld = {
   MIN_ZOOM: 0.05,
   MAX_ZOOM: 2,
 
-  TEST_SPAWN: 0,//10,
+  TEST_SPAWN: 100,
   enemies:  [],
   bullets:  [],
 
@@ -31,15 +31,19 @@ var GameModelWorld = {
     this.frameBullets(ms);
   },
   frameEnemies:function(ms){
-    for(var i=0; i<this.enemies.length; i++)
-    {
-      this.enemies[i].frame(ms);
-    }
+    var enemyCount = (this.enemies.length - 1)
+
+    for(var i=enemyCount; i>=0; i--) {
+      if(this.enemies[i].destroyed) {
+        this.enemies.splice(i, 1)
+      } else {
+        this.enemies[i].frame(ms);
+      }
+    };
   },
   frameBullets:function(ms){
     var bulletCount = (this.bullets.length - 1)
-    for(var i=bulletCount; i>=0; i--)
-    {
+    for(var i=bulletCount; i>=0; i--) {
       if(this.bullets[i].destroyed) {
         this.bullets.splice(i, 1)
       } else {

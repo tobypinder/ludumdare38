@@ -3,7 +3,7 @@ var GameViewEnemy = {
     MOUSE_DOWN:  '#ff33ff',
     MOUSE_HOVER: '#ffff66',
     SELECTED:    '#7777ff',
-    STANDARD:    '#ffffff'
+    STANDARD:    '#dddddd'
   },
 
   render: function(enemy) {

@@ -1,7 +1,6 @@
 var GameViewMoon = {
   render: function(moon)
   {
-
     GameView.renderModeWorld();
     Canvas.strokeStyle = '#999999'
     Canvas.fillStyle = '#999999'
