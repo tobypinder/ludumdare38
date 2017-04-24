@@ -33,10 +33,11 @@ var GameModelPlanetSegment = function(planet, index)
   }
 
   this.kill = function() {
-    console.log("Planet Segment killed! - Game Over? ")
+
     this.HP = 0
     this.destroyed = true;
     GameControllerMouse.deselectEntity(this);
+    GameState.exitGame();
   }
 
   this.sizeOffset = function()
@@ -74,5 +75,19 @@ var GameModelPlanetSegment = function(planet, index)
 
   this.segmentEndAngle = function() {
     return this.segmentMidpointAngle() + this.radialHalfSize()
+  },
+  this.repair =function() {
+    if(GameModelWorld.canAffordResources(this.repairCost()))
+    {
+      GameModelWorld.depleteResources(this.repairCost())
+      this.HP = Math.min(this.HP + 100, this.maxHP)
+    }
+  },
+  this.repairCost = function() {
+    return {
+      red:   0,
+      green: 0,
+      blue:  10
+    }
   }
 }

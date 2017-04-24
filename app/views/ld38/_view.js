@@ -33,6 +33,7 @@ var GameView = {
         this.frameRenderStart();
         break;
       case "ingame":
+        this.renderResources();
         this.frameRenderWorld();
         this.frameRenderUI();
         //this.frameRenderDebug();
@@ -105,6 +106,43 @@ var GameView = {
     );
   },
 
+  renderResources: function(element) {
+    var resourcesRed   = "[R] x " +  GameModelWorld.resources.red
+    var resourcesGreen = "[G] x " +  GameModelWorld.resources.green
+    var resourcesBlue  = "[B] x " +  GameModelWorld.resources.blue
+
+    if(GameViewUI.visibleResourceCosts) {
+      var costs = GameViewUI.visibleResourceCosts
+      resourcesRed   += " ( -" + costs.red   + ")";
+      resourcesGreen += " ( -" + costs.green + ")";
+      resourcesBlue  += " ( -" + costs.blue  + ")";
+    }
+
+
+    Canvas.font = Util.Font.Tiny;
+    Canvas.textAlign   = 'left'
+    Canvas.strokeStyle = '#ff6666'
+    Canvas.fillStyle   = '#ff6666'
+    Canvas.fillText(
+      resourcesRed,
+      GameViewUI.TEXT_PADDING,
+      GameViewUI.TEXT_PADDING + GameViewUI.TINY_TEXT_HEIGHT
+    );
+    Canvas.strokeStyle = '#66ff66'
+    Canvas.fillStyle   = '#66ff66'
+    Canvas.fillText(
+      resourcesGreen,
+      GameViewUI.TEXT_PADDING,
+      GameViewUI.TEXT_PADDING + GameViewUI.TINY_TEXT_HEIGHT * 2
+    );
+    Canvas.strokeStyle = '#6666ff'
+    Canvas.fillStyle   = '#6666ff'
+    Canvas.fillText(
+      resourcesBlue,
+      GameViewUI.TEXT_PADDING,
+      GameViewUI.TEXT_PADDING + GameViewUI.TINY_TEXT_HEIGHT * 3
+    );
+  },
   applyTransform: function(t)
   {
     var m = t.toArray(); //matrix pieces

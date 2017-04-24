@@ -5,6 +5,7 @@ var GameViewUI = {
   OFFSET_X: 0,
   TEXT_PADDING: 5,
   TEXT_HEIGHT: 20,
+  TINY_TEXT_HEIGHT: 14,
   COLOR_BLACK: '0, 0, 0',
   COLOR_WHITE: '255, 255, 255',
   COLOR_RED: '255, 0, 0',
@@ -15,12 +16,14 @@ var GameViewUI = {
   COLOR_GREY: '127, 127, 127',
   hovering: false,
   hint: null,
+  visibleResourceCosts: null,
   panelHeight: 0,
   buttons: [],
   init:function(){
     this.OFFSET_X = GameView.WINDOW_WIDTH - this.PANEL_WIDTH - this.PANEL_PADDING;
     this.HINT_OFFSET = this.TEXT_PADDING
     this.buttons  = [];
+    this.addHint("Place turrets on the moons! Attack is imminent!")
   },
   frame: function()
   {
@@ -153,31 +156,67 @@ var GameViewUI = {
   },
   renderElementTurretUpgradeOptions: function(element) {
     if(element.canPlaceTurret && element.canPlaceTurret()) {
+      this.panelHeight +=  this.TINY_TEXT_HEIGHT
+      Canvas.font = Util.Font.Tiny;
+      Canvas.strokeStyle = this.color(this.COLOR_WHITE)
+      Canvas.fillStyle = this.color(this.COLOR_WHITE)
+      Canvas.textAlign = 'left'
+      Canvas.fillText('Options', this.OFFSET_X + this.TEXT_PADDING, this.panelHeight);
+      Canvas.font = Util.Font.Small;
+      this.spacer();
       new GameViewUIButton(
         'Buy Missile Turret',
         function() { this.purchaseTurret('missile') }.bind(element),
-        'Missile Turrets are standard in every way.'
+        'Missile Turrets are standard in every way.',
+        GameModelTurretFactory.missile.cost
       );
       this.spacer();
 
       new GameViewUIButton(
         'Buy Sniper Turret',
         function() { this.purchaseTurret('sniper') }.bind(element),
-        'Sniper Turrets have long range but they pack a punch!'
+        'Sniper Turrets have long range but they pack a punch!',
+        GameModelTurretFactory.sniper.cost
       ),
       this.spacer();
       new GameViewUIButton(
         'Buy Shotgun Turret',
         function() { this.purchaseTurret('shotgun') }.bind(element),
-        'Sprays hapless enemies with a maelstrom of bullets if they get too close!'
+        'Sprays hapless enemies with a maelstrom of bullets if they get too close!',
+        GameModelTurretFactory.shotgun.cost
+      )
+    } else if(element.turret) {
+      new GameViewUIButton(
+        'Upgrade Turret',
+        function() { this.upgrade() }.bind(element.turret),
+        'Power up.',
+        element.turret.upgradeCost()
+      )
+      this.spacer();
+      this.spacer();
+      new GameViewUIButton(
+        'Destroy Turret',
+        function() { this.killTurret() }.bind(element),
+        'Frees up moon space. No refunds'
+      )
+    } else if(element instanceof GameModelPlanetSegment) {
+      new GameViewUIButton(
+        'Repair Planet Segment',
+        function() { this.repair() }.bind(element),
+        'Partially heals this planet segment',
+        element.repairCost()
       )
     }
   },
   spacer: function() {
-    this.panelHeight += 2
+    this.panelHeight += 5
   },
   addHint: function(hint){
+    this.visibleResourceCosts = null
     this.hint = hint;
+  },
+  addResourceCosts(costs) {
+    this.visibleResourceCosts = costs;
   },
   color: function(colorString)
   {

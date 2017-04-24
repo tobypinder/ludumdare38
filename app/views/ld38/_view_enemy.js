@@ -31,6 +31,19 @@ var GameViewEnemy = {
           rotationMultiplier: 32
         }
       }
+    ],
+    tri: [
+      {
+        points: [
+          [-1, -1],
+          [0,   0],
+          [1,  -1]
+        ],
+        meta: {
+          lineWidth: 4,
+          rotationMultiplier: -16
+        },
+      }
     ]
   },
 
@@ -59,7 +72,6 @@ var GameViewEnemy = {
     GameView.renderModeWorld();
     Canvas.beginPath();
     Canvas.moveTo(enemy.positionX, enemy.positionY)
-
 
     var shapes =  GameViewEnemy.shapes[enemy.shape]
     for(var j=0; j<shapes.length; j++)

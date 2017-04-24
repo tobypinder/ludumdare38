@@ -15,8 +15,13 @@ var GameModelMoonSegment = function(moon, index)
   }
 
   this.purchaseTurret = function(type) {
-    GameViewUI.addHint('You bought a '+ type + ' turret!')
-    this.turret = new GameModelTurretFactory.build(this, type);
+    if(GameModelTurretFactory.canAfford(type))
+    {
+      GameViewUI.addHint('You bought a '+ type + ' turret!')
+      this.turret = new GameModelTurretFactory.build(this, type);
+    } else {
+      GameViewUI.addHint('You cannot afford this item!')
+    }
   }
 
   this.isSelected = function() {
@@ -75,6 +80,12 @@ var GameModelMoonSegment = function(moon, index)
   this.segmentEndAngle = function() {
     return this.segmentMidpointAngle() + this.radialHalfSize()
   }
+
+  this.killTurret = function(){
+    GameViewUI.addHint('Your '+ this.turret.name + "recycled.")
+    this.turret = null
+  }
+
 
   // Init
   this.updatePosition();

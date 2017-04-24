@@ -28,7 +28,8 @@ var Util = {
   Font: {
     Huge:     "64px electrolizeregular",
     Standard: "20px electrolizeregular",
-    Small:    "16px electrolizeregular"
+    Small:    "16px electrolizeregular",
+    Tiny:     "12px electrolizeregular"
   },
   Generator: {
     Greek: [

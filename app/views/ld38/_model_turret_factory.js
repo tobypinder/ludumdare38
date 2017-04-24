@@ -1,8 +1,20 @@
 var GameModelTurretFactory = {
+  upgrades: {
+    baseCost: {
+      red:   0,
+      green: 2,
+      blue:  8
+    }
+  },
   missile: {
-    cost: {},
+    cost: {
+      red:   20,
+      green: 20,
+      blue:  0
+    },
     add: function(segment){
       var turret = new GameModelTurret(segment)
+      turret.type             = 'missile'
       turret.damage           = 40
       turret.fireRate         = 3000
       turret.name             = 'Missile Turret'
@@ -15,9 +27,14 @@ var GameModelTurretFactory = {
     }
   },
   sniper: {
-    cost: {},
+    cost: {
+      red:   25,
+      green: 25,
+      blue:  0
+    },
     add: function(segment){
       var turret = new GameModelTurret(segment)
+      turret.type             = 'sniper'
       turret.damage           = 100
       turret.fireRate         = 8000
       turret.name             = 'Sniper Turret'
@@ -30,9 +47,14 @@ var GameModelTurretFactory = {
     }
   },
   shotgun: {
-    cost: {},
+    cost: {
+      red:   40,
+      green: 10,
+      blue:  0
+    },
     add: function(segment){
       var turret = new GameModelTurret(segment)
+      turret.type             = 'shotgun'
       turret.damage           = 10
       turret.fireRate         = 200
       turret.name             = 'Shotgun Turret'
@@ -46,7 +68,12 @@ var GameModelTurretFactory = {
   },
   build: function(segment, type)
   {
+    GameModelWorld.depleteResources(GameModelTurretFactory[type].cost)
     return GameModelTurretFactory[type].add(segment);
+  },
+  canAfford: function(type) {
+    return GameModelWorld.canAffordResources(GameModelTurretFactory[type].cost)
   }
+
   // Check affordability!
 }

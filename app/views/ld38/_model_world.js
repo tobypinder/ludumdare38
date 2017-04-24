@@ -5,9 +5,16 @@ var GameModelWorld = {
   MIN_ZOOM: 0.05,
   MAX_ZOOM: 2,
 
-  TEST_SPAWN: 30,
   enemies:  [],
   bullets:  [],
+
+  resources: {
+    red:   100,
+    green: 100,
+    blue:  100
+  },
+
+
 
   init: function()
   {
@@ -17,11 +24,6 @@ var GameModelWorld = {
     this.offsetX = 0,
     this.offsetY = 0,
     this.zoom    = 0.5
-
-    for(var i=0; i<this.TEST_SPAWN; i++)
-    {
-      this.addEnemy();
-    }
   },
   frame: function(ms)
   {
@@ -92,5 +94,17 @@ var GameModelWorld = {
     this.zoom    = newZoom;
     this.offsetX = this.offsetX * (newZoom/oldZoom);
     this.offsetY = this.offsetY * (newZoom/oldZoom);
+  },
+  canAffordResources: function(resources) {
+    var enoughRed   = this.resources.red >= resources.red
+    var enoughGreen = this.resources.green >= resources.green
+    var enoughBlue  = this.resources.blue >= resources.blue
+
+    return (enoughRed && enoughGreen && enoughBlue)
+  },
+  depleteResources: function(resources) {
+    this.resources.red   -= resources.red
+    this.resources.green -= resources.green
+    this.resources.blue  -= resources.blue
   }
 }

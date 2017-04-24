@@ -1,7 +1,8 @@
-var GameViewUIButton = function(text, action, hint) {
-  this.text   = text
-  this.hint   = hint
-  this.action = action
+var GameViewUIButton = function(text, action, hint, resourceCosts) {
+  this.text          = text
+  this.hint          = hint
+  this.action        = action
+  this.resourceCosts = resourceCosts
 
   var ui = GameViewUI
 
@@ -36,6 +37,7 @@ var GameViewUIButton = function(text, action, hint) {
     Canvas.strokeStyle = ui.color(ui.COLOR_GREEN)
     Canvas.fillStyle = ui.color(ui.COLOR_GREEN)
     ui.addHint(this.hint);
+    ui.addResourceCosts(this.resourceCosts)
   } else {
     Canvas.strokeStyle = ui.color(ui.COLOR_GREY)
     Canvas.fillStyle = ui.color(ui.COLOR_DARK_GREY)

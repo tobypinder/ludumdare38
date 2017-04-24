@@ -15,6 +15,30 @@ var GameModelTurret = function(segment)
   this.viewConeDistance = 1000
   this.viewConeAngle    = 0
 
+  this.currentUpgrade = 1;
+
+  this.upgradeCost = function() {
+    var baseCost   = GameModelTurretFactory.upgrades.baseCost;
+    var multiplier = Math.floor(Math.pow(this.currentUpgrade, 1.5))
+    return {
+      red:   baseCost.red   * multiplier,
+      green: baseCost.green * multiplier,
+      blue:  baseCost.blue  * multiplier
+    }
+  },
+  this.upgrade = function() {
+    if(GameModelWorld.canAffordResources(this.upgradeCost())) {
+      this.damage           *= (1 + (Math.random() / 10))
+      this.bulletSpeed      *= (1 + (Math.random() / 5))
+      this.viewConeDistance *= (1 + (Math.random() / 8))
+      this.currentUpgrade ++;
+      GameViewUI.addHint(this.name + "upgraded to Level "+this.currentUpgrade)
+      GameModelWorld.depleteResources(this.upgradeCost())
+    } else {
+      GameViewUI.addHint("You can't afford this upgrade.")
+    }
+  }
+
   this.init = function() {
     this.firingCooldown   = 0
     this.updatePosition();

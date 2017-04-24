@@ -9,17 +9,33 @@ GameModelEnemy = function() {
   this.rotation           = (Math.random() * Util.Angle.FULL_PLANET) - Util.Angle.HALF_PLANET;
   this.rotationTime       = ((Math.random() * 30) + 150) * Util.Time.SECONDS;
   this.rotationDirection  = -1;
-  this.baseDistanceRadius = 1000 + 200 * Math.random();
-  this.distanceRadius     = 1000;
+  this.baseDistanceRadius = 2000 + 200 * Math.random();
+  this.distanceRadius     = this.baseDistanceRadius;
   this.MINIMUM_RADIUS     = 100; //100
   this.destroyed          = false;
   this.name               = 'Enemy' // TODO
   this.shape              = 'box'
+  this.color              = '#ffffff'
+  this.baseSpeed          = 30;
+
+  if(Math.random() > 0.3) {
+    this.shape = 'tri'
+    this.baseSpeed += 20;
+  }
+
+  var col = Math.random()
+  if(col < 0.1) {
+    this.color = '#ffaaaa'
+  } else if(col < 0.2) {
+    this.color = '#aaffaa'
+  } else if(col < 0.2) {
+    this.color = '#aaaaff'
+  }
 
   this.fireRate       = 3000 + (400 * Math.random()); //ms
   this.firingCooldown = Math.random() * 500;
 
-  this.baseSpeed  = 20;
+
   this.mouseHover = false;
   this.mouseDown  = false;
 
@@ -67,6 +83,7 @@ GameModelEnemy = function() {
   this.kill = function() {
     this.destroyed = true;
     GameControllerMouse.deselectEntity(this);
+    this.addRandomLoot();
   }
 
   this.cooldowns = function(ms) {
@@ -95,6 +112,18 @@ GameModelEnemy = function() {
     }
   }
 
+  this.addRandomLoot = function() {
+    if(Math.random() > 0.1) {
+      GameModelWorld.resources.red++;
+    }
+    if(Math.random() > 0.1) {
+      GameModelWorld.resources.green++;
+    }
+    if(Math.random() > 0.1) {
+      GameModelWorld.resources.blue++;
+    }
+  }
+
   this.fire = function() {
     // target is always the world
     GameModelWorld.addBullet(this, GameModelPlanet);
@@ -102,7 +131,7 @@ GameModelEnemy = function() {
   }
 
   this.speed = function() {
-    return ((this.distanceRadius / this.baseDistanceRadius) * this.baseSpeed)
+    return this.baseDistanceRadius * this.baseSpeed / 1000
   }
   this.ejectionSpeed = function() {
     return this.speed() + 2;

@@ -15,6 +15,7 @@ var GameModel = {
   },
   frame:function(){
     var ms = GameModel.stats.frameTime
+    GameState.advanceTime(ms);
     if(ms >= 1) {
       // Only work if at least a millisecond has elapsed!
       GameModelWorld.frame(ms)

@@ -100,6 +100,7 @@ var GameControllerMouse = {
   selectEntity: function(entity) {
     this.selectedEntity = entity;
     GameViewUI.hint = null
+    GameViewUI.visibleResourceCosts = null
   },
   deselectEntity: function(entity) {
     if(this.selectedEntity == entity) {
