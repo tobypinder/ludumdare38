@@ -1,5 +1,8 @@
 LD38 - WorldTD
 
+All game code is in app/views/ld38
+
+
 
 Design:
   Number of tiny planetoids stand between enemy waves and target planet.
